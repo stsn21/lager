@@ -1,30 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, StyleSheet, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import warehouse from './assets/warehouse.jpg';
+import { Image, Text, ScrollView, View } from 'react-native';
+import styles from './components/Styles';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import sauceShelfImg from './assets/sauceshelf.jpg';
 import Stock from './components/Stock';
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.base}>
-        <Text style={{ color: '#33c', fontSize: 42 }}>Lager-Appen</Text>
-        <Image source={warehouse} style={{ width: 320, height: 240 }} />
-        <Stock />
-        <StatusBar style="auto" />
-      </View>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.base}>
+        <ScrollView style={styles.container}>
+            <Text style={styles.heading}>Sauce Emporium</Text>
+            <Image source={sauceShelfImg} style={{ width: 320, height: 240, borderRadius: 20 }} />
+            <Stock />
+            <StatusBar style='auto'/>
+        </ScrollView>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  base: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingLeft: 12,
-    paddingRight: 12,
-  }
-});
+};
