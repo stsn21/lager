@@ -1,28 +1,21 @@
 import { StyleSheet } from 'react-native';
 
-const bg = 'coral';
+const bg = '#ffcd9e';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: bg,
     },
     innerContainer: {
-        flex: 1,
         backgroundColor: bg,
         borderWidth: 1,
         borderRadius: 20,
-        padding: 20,
-        marginTop: 12,
-        marginBottom: 12,
+        margin: 10
     },
     base: {
-        flex: 1,
-        alignItems: 'center',
-        paddingRight: 12,
-        paddingLeft: 12,
-        textAlign: 'center',
         backgroundColor: bg,
+        flexGrow: 1,
+        flexShrink: 2
     },
     heading: {
         alignSelf: 'center',
@@ -34,12 +27,21 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontWeight: '200',
         fontSize: 32,
-        paddingBottom: 12
+        padding: 8
     },
-    infoTable: {
-        fontWeight: '300',
-        fontSize: 16,
+    infoText: {
+        fontWeight: '400',
+        fontSize: 15,
+        textAlign: 'left',
     },
+    cell: {
+        flex: 1,
+        justifyContent: 'center',
+        flexGrow: 1,
+        paddingBottom: 3,
+        paddingTop: 3,
+        borderBottomWidth: 1,
+    }
 });
 
 export default styles;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Text, View } from 'react-native';
+import { DataTable } from 'react-native-paper';
 import config from "../config/config.json";
 import styles from './Styles';
 
@@ -12,11 +13,21 @@ function StockList() {
       .then(result => setProducts(result.data));
   }, []);
 
-  const list = products.map((product, index) => <Text style={styles.infoTable} key={index}>{ product['name'] } - { product['stock'] }</Text>);
+  const list = products.map((product, index) =>
+    <DataTable.Row key={index}>
+    <View style={styles.cell}><Text style={styles.infoText}>{ product['name'] }</Text></View>
+    <DataTable.Cell style={styles.cell} numeric><Text style={styles.infoText}>{ product['stock'] }</Text></DataTable.Cell>
+    </DataTable.Row>);
 
   return (
     <View>
-      {list}
+      <DataTable>
+        <DataTable.Header>
+          <DataTable.Title style={styles.cell}>Name</DataTable.Title>
+          <DataTable.Title style={styles.cell} numeric>Qty</DataTable.Title>
+        </DataTable.Header>
+        {list}
+      </DataTable>
     </View>
   );
 };
