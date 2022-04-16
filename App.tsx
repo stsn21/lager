@@ -6,16 +6,16 @@ import sauceShelfImg from './assets/sauceshelf.jpg';
 import Stock from './components/Stock';
 
 export default function App() {
-  return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.base}>
-        <ScrollView style={styles.container}>
-            <Text style={styles.heading}>Sauce Emporium</Text>
-            <Image source={sauceShelfImg} style={{ width: 320, height: 240, borderRadius: 20, alignSelf: 'center' }} />
-            <Stock />
-            <StatusBar style='auto' />
-        </ScrollView>
-      </SafeAreaView>
-    </SafeAreaProvider>
-  );
+    return (
+        <SafeAreaProvider>
+            <SafeAreaView style={styles.base}>
+                <ScrollView style={styles.container}>
+                        <Text style={styles.heading}>Sauce Emporium</Text>
+                        <Image source={sauceShelfImg} style={{ width: 320, height: 240, borderRadius: 20, alignSelf: 'center' }} />
+                        <Stock />
+                        <StatusBar style='auto' />
+                </ScrollView>
+            </SafeAreaView>
+        </SafeAreaProvider>
+    );
 };
