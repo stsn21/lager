@@ -10,12 +10,12 @@ const styles = StyleSheet.create({
         backgroundColor: bg,
         borderWidth: 1,
         borderRadius: 20,
-        margin: 10
+        margin: 10,
     },
     base: {
         backgroundColor: bg,
         flexGrow: 1,
-        flexShrink: 2
+        flexShrink: 2,
     },
     heading: {
         alignSelf: 'center',
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         fontWeight: '200',
         fontSize: 32,
-        padding: 8
+        padding: 8,
     },
     infoText: {
         fontWeight: '400',
@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         paddingBottom: 3,
         paddingTop: 3,
-        borderBottomWidth: 1,
     }
 });
 
