@@ -37,7 +37,6 @@ const styles = StyleSheet.create({
     cell: {
         flex: 1,
         justifyContent: 'center',
-        flexGrow: 1,
         paddingBottom: 3,
         paddingTop: 3,
     }

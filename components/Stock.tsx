@@ -15,10 +15,10 @@ function StockList() {
 
     const list = products.map((product, index) =>
         <DataTable.Row key={index}>
-            <View style={styles.cell}>
+            <View style={[styles.cell, {flexBasis: 5, flexGrow: 1}]}>
                 <Text style={styles.infoText}>{ product['name'] }</Text>
             </View>
-            <DataTable.Cell style={styles.cell} numeric>
+            <DataTable.Cell style={[styles.cell, {flexBasis: 50, flexGrow: 0}]} numeric>
                 <Text style={styles.infoText}>{ product['stock'] }</Text>
             </DataTable.Cell>
         </DataTable.Row>);
@@ -27,8 +27,8 @@ function StockList() {
         <View>
             <DataTable>
                 <DataTable.Header>
-                    <DataTable.Title style={styles.cell}>Name</DataTable.Title>
-                    <DataTable.Title style={styles.cell} numeric>Qty</DataTable.Title>
+                    <DataTable.Title style={[styles.cell, {flexBasis: 5, flexGrow: 1}]}>Name</DataTable.Title>
+                    <DataTable.Title style={[styles.cell, {flexBasis: 50, flexGrow: 0}]} numeric>Qty</DataTable.Title>
                 </DataTable.Header>
                 {list}
             </DataTable>
