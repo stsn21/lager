@@ -3,15 +3,22 @@ import { Text, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import config from "../config/config.json";
 import styles from './Styles';
+import productModel from '../models/products';
 
-function StockList() {
-    const [products, setProducts] = useState([]);
+function StockList({products, setProducts}) {
+    useEffect(async () => {
+        setProducts(await productModel.getProducts());
+      }, []);
 
-    useEffect(() => {
-        fetch(`${config.base_url}/products?api_key=${config.api_key}`)
-            .then(response => response.json())
-            .then(result => setProducts(result.data));
-    }, []);
+    // Från kmom02-övningen Komponenter och struktur i React
+    // const list = products.map((product, index) => {
+    //     return <Text
+    //         key={index}
+    //         style={{ ...Typography.normal }}
+    //         >
+    //             { product.name } - { product.stock }
+    //         </Text>;
+    //   });
 
     const list = products.map((product, index) =>
         <DataTable.Row key={index}>
@@ -23,24 +30,20 @@ function StockList() {
             </DataTable.Cell>
         </DataTable.Row>);
 
-    return (
-        <View>
-            <DataTable>
-                <DataTable.Header>
-                    <DataTable.Title style={[styles.cell, {flexBasis: 5, flexGrow: 1}]}>Name</DataTable.Title>
-                    <DataTable.Title style={[styles.cell, {flexBasis: 50, flexGrow: 0}]} numeric>Qty</DataTable.Title>
-                </DataTable.Header>
-                {list}
-            </DataTable>
-        </View>
-    );
+    return <View>
+        <DataTable>
+            <DataTable.Header>
+                <DataTable.Title style={[styles.cell, {flexBasis: 5, flexGrow: 1}]}>Name</DataTable.Title>
+                <DataTable.Title style={[styles.cell, {flexBasis: 50, flexGrow: 0}]} numeric>Qty</DataTable.Title>
+            </DataTable.Header>
+            {list}
+        </DataTable>
+    </View>;
 };
 
 export default function Stock() {
-    return (
-        <View style={styles.innerContainer}>
-            <Text style={styles.heading2}>Inventory</Text>
-            <StockList />
-        </View>
-    );
+    return <View style={styles.innerContainer}>
+        <Text style={styles.heading2}>Inventory</Text>
+        <StockList products={products} setProducts={setProducts} />
+    </View>;
 };

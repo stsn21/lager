@@ -6,18 +6,19 @@ import Pick from "./components/Pick";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import IconProps from '@expo/vector-icons/build/createIconSet.d'
+import { useState } from 'react';
 
 const Tab = createBottomTabNavigator();
 
-const routeIcons: any = { // det här är nog inte best practice men förstår inte varför!
+const routeIcons: any = { // TODO: finns det ett bättre sätt att göra TS nöjd?
     "Lager": "home",
     "Plock": "list",
-  };
+};
+
+const [allOrders, setAllOrders] = useState([]);
 
 export default function App() {
-    return (
-        <SafeAreaProvider>
+    return <SafeAreaProvider>
             <NavigationContainer>
                 <Tab.Navigator screenOptions={({ route }) => ({
                     tabBarIcon: ({ focused, color, size }) => {
@@ -29,11 +30,14 @@ export default function App() {
                         tabBarInactiveTintColor: 'gray',
                     })}
                 >
-                    <Tab.Screen name="Lager" component={Home} />
-                    <Tab.Screen name="Plock" component={Pick} />
+                    <Tab.Screen name="Lager">
+                        {() => <Home products={products} setProducts={setProducts} />}
+                    </Tab.Screen>
+                    <Tab.Screen name="Plock">
+                        {() => <Pick products={products} setProducts={setProducts} />}
+                    </Tab.Screen>
                 </Tab.Navigator>
             </NavigationContainer>
             <StatusBar style='auto' />
-        </SafeAreaProvider>
-    );
+        </SafeAreaProvider>;
 };

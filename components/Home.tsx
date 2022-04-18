@@ -3,12 +3,10 @@ import styles from './Styles';
 import sauceShelfImg from '../assets/sauceshelf.jpg';
 import Stock from './Stock';
 
-export default function App() {
-    return (
-        <ScrollView style={styles.container}>
-            <Text style={styles.heading}>Sauce Emporium</Text>
-            <Image source={sauceShelfImg} style={{ width: 320, height: 240, borderRadius: 20, alignSelf: 'center' }} />
-            <Stock />
-        </ScrollView>
-    );
+export default function Home({products, setProducts}) {
+    return <ScrollView style={styles.base}>
+        <Text style={styles.header}>Lager-Appen</Text>
+        <Image source={sauceShelfImg} style={{ width: 320, height: 240, marginBottom: 28 }} />
+        <Stock products={products} setProducts={setProducts} />
+    </ScrollView>;
 };
