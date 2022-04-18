@@ -1,21 +1,38 @@
 import { StatusBar } from 'expo-status-bar';
-import { Image, Text, ScrollView, View } from 'react-native';
 import styles from './components/Styles';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import sauceShelfImg from './assets/sauceshelf.jpg';
-import Stock from './components/Stock';
+import Home from "./components/Home";
+import Pick from "./components/Pick";
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Ionicons } from '@expo/vector-icons';
+
+const Tab = createBottomTabNavigator();
+
+const routeIcons = {
+    "Lager": "home",
+    "Plock": "list",
+  };
 
 export default function App() {
     return (
         <SafeAreaProvider>
-            <SafeAreaView style={styles.base}>
-                <ScrollView style={styles.container}>
-                        <Text style={styles.heading}>Sauce Emporium</Text>
-                        <Image source={sauceShelfImg} style={{ width: 320, height: 240, borderRadius: 20, alignSelf: 'center' }} />
-                        <Stock />
-                        <StatusBar style='auto' />
-                </ScrollView>
-            </SafeAreaView>
+            <NavigationContainer>
+                <Tab.Navigator screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, color, size }) => {
+                        let iconName = routeIcons[route.name] || "alert";
+
+                        return <Ionicons name={iconName} size={size} color={color} />;
+                        },
+                        tabBarActiveTintColor: 'blue',
+                        tabBarInactiveTintColor: 'gray',
+                    })}
+                >
+                    <Tab.Screen name="Lager" component={Home} />
+                    <Tab.Screen name="Plock" component={Pick} />
+                </Tab.Navigator>
+            </NavigationContainer>
+            <StatusBar style='auto' />
         </SafeAreaProvider>
     );
 };
