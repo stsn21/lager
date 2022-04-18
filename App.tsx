@@ -10,7 +10,7 @@ import IconProps from '@expo/vector-icons/build/createIconSet.d'
 
 const Tab = createBottomTabNavigator();
 
-const routeIcons: any = {
+const routeIcons: any = { // det här är nog inte best practice men förstår inte varför!
     "Lager": "home",
     "Plock": "list",
   };
