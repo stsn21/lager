@@ -6,10 +6,11 @@ import Pick from "./components/Pick";
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import IconProps from '@expo/vector-icons/build/createIconSet.d'
 
 const Tab = createBottomTabNavigator();
 
-const routeIcons = {
+const routeIcons: any = {
     "Lager": "home",
     "Plock": "list",
   };
