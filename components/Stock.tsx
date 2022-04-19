@@ -1,7 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Text, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
-import config from "../config/config.json";
 import styles from './Styles';
 import productModel from '../models/products';
 
@@ -10,7 +9,7 @@ function StockList({products, setProducts}) {
         setProducts(await productModel.getProducts());
       }, []);
 
-    // Från kmom02-övningen Komponenter och struktur i React
+/*     Från kmom02-övningen Komponenter och struktur i React
     const list = products.map((product, index) => {
         return <Text
             key={index}
@@ -18,18 +17,18 @@ function StockList({products, setProducts}) {
             >
                 { product.name } - { product.stock }
             </Text>;
-      });
+      }); */
 
     // My stuff from kmom01
-    // const list = products.map((product, index) =>
-    //     <DataTable.Row key={index}>
-    //         <View style={[styles.cell, {flexBasis: 5, flexGrow: 1}]}>
-    //             <Text style={styles.infoText}>{ product['name'] }</Text>
-    //         </View>
-    //         <DataTable.Cell style={[styles.cell, {flexBasis: 50, flexGrow: 0}]} numeric>
-    //             <Text style={styles.infoText}>{ product['stock'] }</Text>
-    //         </DataTable.Cell>
-    //     </DataTable.Row>);
+    const list = products.map((product, index) =>
+        <DataTable.Row key={index}>
+            <View style={[styles.cell, {flexBasis: 5, flexGrow: 1}]}>
+                <Text style={styles.infoText}>{ product['name'] }</Text>
+            </View>
+            <DataTable.Cell style={[styles.cell, {flexBasis: 50, flexGrow: 0}]} numeric>
+                <Text style={styles.infoText}>{ product['stock'] }</Text>
+            </DataTable.Cell>
+        </DataTable.Row>);
 
     return <View>
         <DataTable>
