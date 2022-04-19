@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import styles from './components/Styles';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Home from "./components/Home";
 import Pick from "./components/Pick";
 import { NavigationContainer } from '@react-navigation/native';
@@ -21,28 +20,28 @@ export default function App() {
     const [products, setProducts] = useState([]);
 
     return <SafeAreaProvider>
-            <NavigationContainer>
-                <Tab.Navigator screenOptions={({ route }) => ({
-                    tabBarIcon: ({ focused, color, size }) => {
-                        let iconName = routeIcons[route.name] || "alert";
+        <NavigationContainer>
+            <Tab.Navigator screenOptions={({ route }) => ({
+                tabBarIcon: ({ focused, color, size }) => {
+                    let iconName = routeIcons[route.name] || "alert";
 
-                        return <Ionicons name={iconName} size={size} color={color} />;
-                        },
-                        tabBarActiveTintColor: 'blue',
-                        tabBarInactiveTintColor: 'gray',
-                    })}
-                >
-                    <Tab.Screen name="Lager">
-                        {() => <Home products={products} setProducts={setProducts} />}
-                    </Tab.Screen>
-                    <Tab.Screen name="Plock">
-                        {() => <Pick setProducts={setProducts} />}
-                    </Tab.Screen>
-                    {/* <Tab.Screen name="Orders">
-                        {() => <OrderList products={products} setProducts={setProducts} />}
-                    </Tab.Screen> */}
-                </Tab.Navigator>
-            </NavigationContainer>
-            <StatusBar style='auto' />
-        </SafeAreaProvider>;
+                    return <Ionicons name={iconName} size={size} color={color} />;
+                    },
+                    tabBarActiveTintColor: 'blue',
+                    tabBarInactiveTintColor: 'gray',
+                })}
+            >
+                <Tab.Screen name="Lager">
+                    {() => <Home products={products} setProducts={setProducts} />}
+                </Tab.Screen>
+                <Tab.Screen name="Plock">
+                    {() => <Pick setProducts={setProducts} />}
+                </Tab.Screen>
+                {/* <Tab.Screen name="Orders">
+                    {() => <OrderList products={products} setProducts={setProducts} />}
+                </Tab.Screen> */}
+            </Tab.Navigator>
+        </NavigationContainer>
+        <StatusBar style='auto' />
+    </SafeAreaProvider>;
 };
