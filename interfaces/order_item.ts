@@ -1,1 +1,1 @@
-export default interface OrderItem {};
+export default interface OrderItem {}; // TODO
