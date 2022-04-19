@@ -7,17 +7,19 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { useState } from 'react';
+import OrderList from './components/OrderList';
+
+const routeIcons = {
+    "Lager": "home",
+    "Plock": "list",
+    // TODO: Orders
+};
 
 const Tab = createBottomTabNavigator();
 
-const routeIcons: any = { // TODO: finns det ett bättre sätt att göra TS nöjd?
-    "Lager": "home",
-    "Plock": "list",
-};
-
-const [allOrders, setAllOrders] = useState([]);
-
 export default function App() {
+    const [products, setProducts] = useState([]);
+
     return <SafeAreaProvider>
             <NavigationContainer>
                 <Tab.Navigator screenOptions={({ route }) => ({
@@ -34,8 +36,11 @@ export default function App() {
                         {() => <Home products={products} setProducts={setProducts} />}
                     </Tab.Screen>
                     <Tab.Screen name="Plock">
-                        {() => <Pick products={products} setProducts={setProducts} />}
+                        {() => <Pick setProducts={setProducts} />}
                     </Tab.Screen>
+                    {/* <Tab.Screen name="Orders">
+                        {() => <OrderList products={products} setProducts={setProducts} />}
+                    </Tab.Screen> */}
                 </Tab.Navigator>
             </NavigationContainer>
             <StatusBar style='auto' />

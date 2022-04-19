@@ -1,4 +1,5 @@
 import { View, Text, Button } from "react-native";
+import { Base, Typography } from '../styles';
 import orderModel from "../models/orders";
 import { useEffect, useState } from 'react';
 import productModel from '../models/products';
@@ -17,7 +18,15 @@ export default function PickList({ route, navigation, setProducts }) {
         navigation.navigate("List", { reload: true });
     }
 
+    // Emils kmom02-föreläsning, vet inte vad detta gör än
+    const productsHash = productsList.reduce((hash, current) => ({ ...hash, [current.id]: current.stock }), {});
+
+    let allInStock = true;
+
     const orderItemsList = order.order_items.map((item, index) => {
+        if (productsHash[item.product_id] < item.amount) {
+            allInStock = false;
+        };
         return <Text key={index}>
                     {item.name} - {item.amount} - {item.location}
             </Text>;

@@ -11,24 +11,25 @@ function StockList({products, setProducts}) {
       }, []);
 
     // Från kmom02-övningen Komponenter och struktur i React
-    // const list = products.map((product, index) => {
-    //     return <Text
-    //         key={index}
-    //         style={{ ...Typography.normal }}
-    //         >
-    //             { product.name } - { product.stock }
-    //         </Text>;
-    //   });
+    const list = products.map((product, index) => {
+        return <Text
+            key={index}
+            // style={{ ...Typography.normal }}
+            >
+                { product.name } - { product.stock }
+            </Text>;
+      });
 
-    const list = products.map((product, index) =>
-        <DataTable.Row key={index}>
-            <View style={[styles.cell, {flexBasis: 5, flexGrow: 1}]}>
-                <Text style={styles.infoText}>{ product['name'] }</Text>
-            </View>
-            <DataTable.Cell style={[styles.cell, {flexBasis: 50, flexGrow: 0}]} numeric>
-                <Text style={styles.infoText}>{ product['stock'] }</Text>
-            </DataTable.Cell>
-        </DataTable.Row>);
+    // My stuff from kmom01
+    // const list = products.map((product, index) =>
+    //     <DataTable.Row key={index}>
+    //         <View style={[styles.cell, {flexBasis: 5, flexGrow: 1}]}>
+    //             <Text style={styles.infoText}>{ product['name'] }</Text>
+    //         </View>
+    //         <DataTable.Cell style={[styles.cell, {flexBasis: 50, flexGrow: 0}]} numeric>
+    //             <Text style={styles.infoText}>{ product['stock'] }</Text>
+    //         </DataTable.Cell>
+    //     </DataTable.Row>);
 
     return <View>
         <DataTable>
@@ -41,7 +42,7 @@ function StockList({products, setProducts}) {
     </View>;
 };
 
-export default function Stock() {
+export default function Stock({products, setProducts}) {
     return <View style={styles.innerContainer}>
         <Text style={styles.heading2}>Inventory</Text>
         <StockList products={products} setProducts={setProducts} />
