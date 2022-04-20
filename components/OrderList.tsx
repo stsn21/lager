@@ -18,12 +18,13 @@ export default function OrderList({ route, navigation }) {
     useEffect(() => {
         reloadOrders();
     }, []);
-
-    useEffect(() => {
+    
+    // Unsure when this part appeared or if it conflicts with above
+/*     useEffect(() => {
         fetch(`${config.base_url}/orders?api_key=${config.api_key}`)
           .then(response => response.json())
           .then(result => setAllOrders(result.data));
-    }, []);
+    }, []); */
 
     const listOfOrders = allOrders
         .filter(order => order.status === "Ny")
@@ -40,7 +41,7 @@ export default function OrderList({ route, navigation }) {
         });
 
     return <View>
-        <Text>Ordrar redo att plockas</Text>
+        <Text>Orders ready to pick</Text>
         {listOfOrders}
     </View>;
 };
