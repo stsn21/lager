@@ -33,7 +33,7 @@ export default function OrderList({ route, navigation }) {
                 title={order.name}
                 key={index}
                 onPress={() => {
-                    navigation.navigate('Details', {
+                    navigation.navigate('Order details', {
                         order: order
                     });
                 }}
