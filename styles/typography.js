@@ -1,19 +1,19 @@
 export const header1 = {
-    fontSize: 42,
-    marginBottom: 28,
+    alignSelf: 'center',
+    fontWeight: '200',
+    fontSize: 38,
+    padding: 12,
 };
 
 export const header2 = {
-    fontSize: 34,
-    marginBottom: 28,
+    alignSelf: 'center',
+    fontWeight: '200',
+    fontSize: 32,
+    padding: 8,
 };
 
-export const header3 = {
-    fontSize: 28,
-    marginBottom: 28,
-};
-
-export const normal = {
-    fontSize: 20,
-    marginBottom: 28,
+export const infoText = {
+    fontWeight: '400',
+    fontSize: 15,
+    textAlign: 'left',
 };
