@@ -1,7 +1,5 @@
 import config from "../config/config.json";
-
 import products from "./products";
-
 import Order from "../interfaces/order";
 import OrderItem from "../interfaces/order_item";
 
