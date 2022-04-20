@@ -9,8 +9,8 @@ import { useState } from 'react';
 import OrderList from './components/OrderList';
 
 const routeIcons = {
-    "Lager": "home",
-    "Plock": "list",
+    "Stock": "home",
+    "Pick": "list",
     // TODO: Orders
 };
 
@@ -31,10 +31,10 @@ export default function App() {
                     tabBarInactiveTintColor: 'gray',
                 })}
             >
-                <Tab.Screen name="Lager">
+                <Tab.Screen name="Stock">
                     {() => <Home products={products} setProducts={setProducts} />}
                 </Tab.Screen>
-                <Tab.Screen name="Plock">
+                <Tab.Screen name="Pick">
                     {() => <Pick setProducts={setProducts} />}
                 </Tab.Screen>
                 {/* <Tab.Screen name="Orders">
