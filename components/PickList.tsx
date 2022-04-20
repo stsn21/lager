@@ -18,17 +18,19 @@ export default function PickList({ route, navigation, setProducts }) {
         navigation.navigate("List", { reload: true });
     }
 
-    // Emils kmom02-föreläsning, vet inte vad detta gör än
+    // Reduces productsList to an object of format product_id: stock
     const productsHash = productsList.reduce((hash, current) => ({ ...hash, [current.id]: current.stock }), {});
 
     let allInStock = true;
 
     const orderItemsList = order.order_items.map((item, index) => {
+        let notPickableIndicator = "";
         if (productsHash[item.product_id] < item.amount) {
             allInStock = false;
+            notPickableIndicator = " ⛔️";
         };
         return <Text key={index}>
-                    {item.name} - {item.amount} - {item.location}
+                    {item.name} - {item.amount} - {item.location}{notPickableIndicator}
             </Text>;
     });
 
@@ -41,6 +43,6 @@ export default function PickList({ route, navigation, setProducts }) {
 
         {orderItemsList}
 
-        <Button title="Plocka order" onPress={pick} />
+        <Button title="Pack order" onPress={pick} disabled={!allInStock} />
     </View>;
 };
