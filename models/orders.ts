@@ -11,13 +11,13 @@ const orders = {
         return result.data;
     },
     pickOrder: async function pickOrder(order: Partial<Order>) {
-        // TODO: Minska lagersaldo för de orderrader som finns i ordern
-        // TODO: Ändra status för ordern till packad
         await Promise.all(order.order_items.map(async (order_item: Partial<OrderItem>) => {
+            const newStock = order_item.stock - order_item.amount
+
             let changedProduct = {
                 id: order_item.product_id,
                 name: order_item.name,
-                stock: order_item.stock,
+                stock: newStock,
                 api_key: config.api_key,
             };
 
