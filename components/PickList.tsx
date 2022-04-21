@@ -3,6 +3,34 @@ import { Base, Typography } from '../styles';
 import orderModel from "../models/orders";
 import { useEffect, useState } from 'react';
 import productModel from '../models/products';
+import { DataTable } from "react-native-paper";
+
+const columnStyles = {
+    name: [
+        Base.cell,
+        {
+            flexBasis: 10,
+            flexGrow: 2,
+            flexShrink: 10,
+        }
+    ],
+    qty: [
+        Base.cell,
+        {
+            flexBasis: 1,
+            flexGrow: 0.5,
+            flexShrink: 0,
+        }
+    ],
+    location: [
+        Base.cell,
+        {
+            flexBasis: 1,
+            flexGrow: 0.5,
+            flexShrink: 0,
+        }
+    ]
+};
 
 export default function PickList({ route, navigation, setProducts }) {
     const { order } = route.params;
@@ -24,25 +52,60 @@ export default function PickList({ route, navigation, setProducts }) {
     let allInStock = true;
 
     const orderItemsList = order.order_items.map((item, index) => {
-        let notPickableIndicator = "";
+        let qtyInStockStyle = {};
         if (productsHash[item.product_id] < item.amount) {
             allInStock = false;
-            notPickableIndicator = " ⛔️";
+            qtyInStockStyle = Base.invalidContainer;
         };
-        return <Text key={index}>
-                    {item.name} - {item.amount} - {item.location}{notPickableIndicator}
-            </Text>;
+
+        return <DataTable.Row key={index}>
+            <View style={columnStyles.name}>
+                <Text style={Typography.infoText}>{ item['name'] }</Text>
+            </View>
+            <DataTable.Cell style={[columnStyles.qty, qtyInStockStyle]} numeric>
+                <Text style={[Typography.infoText]}>{ item['amount'] }</Text>
+            </DataTable.Cell>
+            <DataTable.Cell style={columnStyles.location}>
+                <Text style={Typography.infoText}>{ item['location'] }</Text>
+            </DataTable.Cell>
+        </DataTable.Row>;
     });
 
-    return <View>
-        <Text>{order.name}</Text>
-        <Text>{order.address}</Text>
-        <Text>{order.zip} {order.city}</Text>
+    return <View style={Base.base}>
+        <Text style={Typography.header2}>Info</Text>
+        <DataTable>
+            <DataTable.Row>
+                <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
+                    <Text style={[Typography.infoText, { textAlign: "left" }]}>Name:</Text>
+                </View>
+                <View style={Base.cell}>
+                    <Text style={[Typography.infoText, { textAlign: "right" }]}>
+                        { order['name'] }
+                    </Text>
+                </View>
+            </DataTable.Row>
+            <DataTable.Row style={{height: 72}}>
+                <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
+                    <Text style={[Typography.infoText, { textAlign: "left" }]}>Address:</Text>
+                </View>
+                <View style={Base.cell}>
+                    <Text style={[Typography.infoText, { textAlign: "right" }]}>
+                        { order['address'] }{"\n"}{ order['zip'] } { order['city'] }{"\n"}{ order['country'] }
+                    </Text>
+                </View>
+            </DataTable.Row>
+        </DataTable>
 
-        <Text>Produkter:</Text>
+        <Text style={Typography.header2}>Items</Text>
+        <DataTable>
+                <DataTable.Header>
+                    <DataTable.Title style={columnStyles.name}>Name</DataTable.Title>
+                    <DataTable.Title style={columnStyles.qty} numeric>Qty</DataTable.Title>
+                    <DataTable.Title style={columnStyles.location} numeric>Location</DataTable.Title>
+                </DataTable.Header>
+                {orderItemsList}
+            </DataTable>
 
-        {orderItemsList}
-
-        <Button title="Pack order" onPress={pick} disabled={!allInStock} />
+        <Button title="Pack order" color={Base.accentColor} onPress={pick} disabled={!allInStock} />
     </View>;
 };

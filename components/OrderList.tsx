@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { View, Text, Button } from "react-native";
+import { View, Button } from "react-native";
 import orderModel from '../models/orders';
-import config from "./../config/config.json";
+import { Base } from '../styles/index'
+import { DataTable } from 'react-native-paper';
 
 export default function OrderList({ route, navigation }) {
     const { reload } = route.params || false;
@@ -18,30 +19,24 @@ export default function OrderList({ route, navigation }) {
     useEffect(() => {
         reloadOrders();
     }, []);
-    
-    // Unsure when this part appeared or if it conflicts with above
-/*     useEffect(() => {
-        fetch(`${config.base_url}/orders?api_key=${config.api_key}`)
-          .then(response => response.json())
-          .then(result => setAllOrders(result.data));
-    }, []); */
 
     const listOfOrders = allOrders
         .filter(order => order.status === "Ny")
         .map((order, index) => {
-            return <Button
-                title={order.name}
-                key={index}
-                onPress={() => {
-                    navigation.navigate('Order details', {
-                        order: order
-                    });
-                }}
-            />;
+            return <DataTable.Row key={index}>
+                <DataTable.Cell style={Base.container}>
+                    <Button title={order.name} key={index} color={Base.accentColor} onPress={() => {
+                        navigation.navigate('Order details', {
+                            order: order
+                        });
+                    }}/>
+                </DataTable.Cell>
+            </DataTable.Row>;
         });
 
-    return <View>
-        <Text>Orders ready to pick</Text>
-        {listOfOrders}
+    return <View style={Base.base}>
+        <DataTable>
+            {listOfOrders}
+        </DataTable>
     </View>;
 };
