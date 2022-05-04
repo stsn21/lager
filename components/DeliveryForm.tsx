@@ -4,6 +4,7 @@ import { Base, Typography, Forms } from '../styles';
 
 import Product from '../interfaces/product';
 import Delivery from '../interfaces/delivery';
+import deliveryModel from '../models/deliveries';
 
 // for ProductDropDown component
 import { Picker } from '@react-native-picker/picker';
@@ -85,6 +86,8 @@ export default function DeliveryForm({ navigation }) {
         navigation.navigate("List", { reload: true }); // TODO: is "List" right?
     }
 
+    // TODO: Fill in missing form fields
+
     return (
         <ScrollView style={{ ...Base.base }}>
             <Text style={{ ...Typography.header2 }}>Ny inleverans</Text>
@@ -96,6 +99,13 @@ export default function DeliveryForm({ navigation }) {
                     setDelivery({ ...delivery, comment: content })
                 }}
                 value={delivery?.comment}
+            />
+
+            <Text style={{ ...Typography.label }}>Produkt</Text>
+            <ProductDropDown
+                delivery={delivery}
+                setDelivery={setDelivery}
+                setCurrentProduct={setCurrentProduct}
             />
 
             <Text style={{ ...Typography.label }}>Antal</Text>
