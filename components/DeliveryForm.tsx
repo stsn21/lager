@@ -68,6 +68,8 @@ function DateDropDown(props) {
     );
 }
 
+// TODO: Fix error with currentProduct and setCurrentProduct
+
 export default function DeliveryForm({ navigation }) {
     const [delivery, setDelivery] = useState<Partial<Delivery>>({});
 
@@ -84,20 +86,9 @@ export default function DeliveryForm({ navigation }) {
         navigation.navigate("List", { reload: true }); // TODO: is "List" right?
     }
 
-    // TODO: Fill in missing form fields
-
     return (
         <ScrollView style={{ ...Base.base }}>
             <Text style={{ ...Typography.header2 }}>Ny inleverans</Text>
-
-            <Text style={{ ...Typography.label }}>Kommentar</Text>
-            <TextInput
-                style={{ ...Forms.input }}
-                onChangeText={(content: string) => {
-                    setDelivery({ ...delivery, comment: content })
-                }}
-                value={delivery?.comment}
-            />
 
             <Text style={{ ...Typography.label }}>Produkt</Text>
             <ProductDropDown
@@ -114,6 +105,17 @@ export default function DeliveryForm({ navigation }) {
                 }}
                 value={delivery?.amount?.toString()}
                 keyboardType="numeric"
+            />
+
+            {/* TODO: Leveransdatum field */}
+
+            <Text style={{ ...Typography.label }}>Kommentar</Text>
+            <TextInput
+                style={{ ...Forms.input }}
+                onChangeText={(content: string) => {
+                    setDelivery({ ...delivery, comment: content })
+                }}
+                value={delivery?.comment}
             />
 
             <Button
