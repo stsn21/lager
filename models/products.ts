@@ -4,8 +4,8 @@ import Product from '../interfaces/product'
 const products = {
     updateProduct: async function updateProduct(product: Partial<Product>): Promise<void> {
         try {
-            await fetch(`${config.base_url}/products?api_key=${config.api_key}`, {
-                body: JSON.stringify(product),
+            await fetch(`${config.base_url}/products`, {
+                body: JSON.stringify({...product, api_key: config.api_key}),
                 headers: {
                     'content-type': 'application/json'
                 },
