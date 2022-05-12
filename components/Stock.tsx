@@ -1,13 +1,20 @@
-import { useEffect } from 'react';
+import { useCallback } from 'react';
 import { Text, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
+import { useFocusEffect } from '@react-navigation/native';
 import productModel from '../models/products';
 import { Typography, Base } from '../styles/index';
 
-function StockList({products, setProducts}) {
-    useEffect(async () => {
+function StockList({ products, setProducts }) {
+    useFocusEffect(
+        useCallback(() => {
+            reloadProducts();
+        }, [])
+    );
+
+    async function reloadProducts() {
         setProducts(await productModel.getProducts());
-      }, []);
+    };
 
     const list = products.map((product, index) =>
         <DataTable.Row key={index}>
