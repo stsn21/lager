@@ -23,6 +23,13 @@ export const innerContainer = {
     margin: 10,
 };
 
+export const multilineMenuContainer = {
+    backgroundColor: bg,
+    borderTopWidth: 1,
+    justifyContent: 'center',
+    padding: 12,
+};
+
 export const base = {
     backgroundColor: bg,
     flexGrow: 1,
