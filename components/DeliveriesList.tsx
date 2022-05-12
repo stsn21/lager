@@ -1,28 +1,37 @@
-import { View, Button, Text } from "react-native";
+import { useState, useEffect } from 'react';
+import { ScrollView, View, Button, Text } from "react-native";
+import deliveryModel from "../models/deliveries"
 import { Base, Typography } from "../styles/index";
 
-// del av components/DeliveriesList.tsx
-export default function DeliveriesList ({ navigation }) {
+export default function DeliveriesList ({ route, navigation }) {
+    const { reload } = route.params || false;
+    const [allDeliveries, setAllDeliveries] = useState([]);
 
-    const listOfDeliveries = <Text>list of deliveries placeholder</Text>;
+    if (reload) {
+        reloadDeliveries();
+        route.params = false;
+    };
 
-    // Template to follow for listOfDeliveries?
+    async function reloadDeliveries() {
+        setAllDeliveries(await deliveryModel.getDeliveries());
+    };
 
-    // const listOfOrders = allOrders
-    // .filter(order => order.status === "Ny")
-    // .map((order, index) => {
-    //     return <DataTable.Row key={index}>
-    //         <DataTable.Cell style={Base.container}>
-    //             <Button title={order.name} key={index} color={Base.accentColor} onPress={() => {
-    //                 navigation.navigate('Order details', {
-    //                     order: order
-    //                 });
-    //             }}/>
-    //         </DataTable.Cell>
-    //     </DataTable.Row>;
-    // });
+    useEffect(() => {
+        reloadDeliveries();
+    }, []);
 
-    return <View style={Base.base}>
+    const listOfDeliveries = allDeliveries //TODO: sort by date?
+        // .filter(delivery => Date.parse(delivery.delivery_date) < Date.now())
+        .map((delivery, index) => {
+            return <View key={index} style={Base.multilineMenuContainer}>
+                <Text>{delivery.product_name}</Text>
+                <Text>{delivery.amount}</Text>
+                <Text>{delivery.delivery_date}</Text>
+                <Text>{delivery.comment}</Text>
+            </View>;
+        });
+
+    return <ScrollView style={Base.base}>
         <Text style={Typography.header2}>Inleveranser</Text>
         {listOfDeliveries}
         <Button
@@ -31,5 +40,5 @@ export default function DeliveriesList ({ navigation }) {
                 navigation.navigate('Form');
             }}
         />
-    </View>;
+    </ScrollView>;
 };

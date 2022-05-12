@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ScrollView, Text, TextInput, Button, Platform, View } from "react-native";
 import { Base, Typography, Forms } from '../styles';
 
@@ -9,19 +9,15 @@ import deliveryModel from '../models/deliveries';
 // for ProductDropDown component
 import { Picker } from '@react-native-picker/picker';
 import productModel from "../models/products";
+import moment from 'moment';
 
 // for DateDropDown component
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 function ProductDropDown(props) {
-    const [products, setProducts] = useState<Product[]>([]);
     let productsHash: any = {};
 
-    useEffect(async () => {
-        setProducts(await productModel.getProducts());
-    }, []);
-
-    const itemsList = products.map((prod, index) => {
+    const itemsList = props.products.map((prod, index) => {
         productsHash[prod.id] = prod;
         return <Picker.Item key={index} label={prod.name} value={prod.id} />;
     });
@@ -56,7 +52,7 @@ function DateDropDown(props) {
 
                         props.setDelivery({
                             ...props.delivery,
-                            delivery_date: date.toLocaleDateString('se-SV'),
+                            delivery_date: moment(dropDownDate).format("YYYY-MM-DD"),
                         });
 
                         setShow(false);
@@ -68,10 +64,19 @@ function DateDropDown(props) {
     );
 }
 
-// TODO: Fix error with currentProduct and setCurrentProduct
-
 export default function DeliveryForm({ navigation }) {
+    const [products, setProducts] = useState<Product[]>([]);
     const [delivery, setDelivery] = useState<Partial<Delivery>>({});
+    const [currentProduct, setCurrentProduct] = useState<Partial<Product>>({});
+
+    useEffect(async () => {
+        const productChoices = (await productModel.getProducts());
+        setProducts(productChoices);
+        setDelivery({
+            product_id: productChoices[0].id,
+            delivery_date: moment(new Date()).format("YYYY-MM-DD"),
+        });
+    }, []);
 
     async function addDelivery() {
         await deliveryModel.addDelivery(delivery);
@@ -83,7 +88,7 @@ export default function DeliveryForm({ navigation }) {
 
         await productModel.updateProduct(updatedProduct);
 
-        navigation.navigate("List", { reload: true }); // TODO: is "List" right?
+        navigation.navigate("List", { reload: true });
     }
 
     return (
@@ -92,6 +97,7 @@ export default function DeliveryForm({ navigation }) {
 
             <Text style={{ ...Typography.label }}>Produkt</Text>
             <ProductDropDown
+                products={products}
                 delivery={delivery}
                 setDelivery={setDelivery}
                 setCurrentProduct={setCurrentProduct}
@@ -101,13 +107,22 @@ export default function DeliveryForm({ navigation }) {
             <TextInput
                 style={{ ...Forms.input }}
                 onChangeText={(content: string) => {
-                    setDelivery({ ...delivery, amount: parseInt(content) })
+                    const contentInt: number = parseInt(content);
+                    if (!Number.isNaN(contentInt) && contentInt >= 0) {
+                        setDelivery({ ...delivery, amount: contentInt});
+                    } else if (content === "") {
+                        setDelivery({...delivery, amount: undefined});
+                    };
                 }}
                 value={delivery?.amount?.toString()}
                 keyboardType="numeric"
             />
 
-            {/* TODO: Leveransdatum field */}
+            <Text style={{ ...Typography.label }}>Leveransdatum</Text>
+            <DateDropDown
+                delivery={delivery}
+                setDelivery={setDelivery}
+            />
 
             <Text style={{ ...Typography.label }}>Kommentar</Text>
             <TextInput
@@ -118,8 +133,7 @@ export default function DeliveryForm({ navigation }) {
                 value={delivery?.comment}
             />
 
-            <Button
-                title="Gör inleverans"
+            <Button title="Gör inleverans"
                 onPress={() => {
                     addDelivery();
                 }}
