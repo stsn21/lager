@@ -14,7 +14,7 @@ const orders = {
         await Promise.all(order.order_items.map(async (order_item: Partial<OrderItem>) => {
             const newStock = order_item.stock - order_item.amount
 
-            let changedProduct = {
+            const changedProduct = {
                 id: order_item.product_id,
                 name: order_item.name,
                 stock: newStock,
@@ -24,7 +24,7 @@ const orders = {
             await products.updateProduct(changedProduct);
         }));
 
-        let changedOrder = {
+        const changedOrder = {
             id: order.id,
             name: order.name,
             status_id: 200,
