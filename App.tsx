@@ -34,16 +34,16 @@ export default function App() {
                     tabBarInactiveBackgroundColor: Base.navigationContainerBg,
                     ...Base.navigationContainerStyle,
                     tabBarStyle: {padding: 3, backgroundColor: Base.navigationContainerBg}
-            })}
+                })}
             >
                 <Tab.Screen name="Stock">
-                    {() => <Home products={products} setProducts={setProducts} />}
+                    {(props) => <Home {...props} products={products} setProducts={setProducts} />}
                 </Tab.Screen>
                 <Tab.Screen name="Pick" options={{ headerShown: false }}>
-                    {() => <Pick setProducts={setProducts} />}
+                    {(props) => <Pick {...props} products={products} setProducts={setProducts} />}
                 </Tab.Screen>
                 <Tab.Screen name="Deliveries" options={{ headerShown: false }}>
-                    {() => <Deliveries setProducts={setProducts} />}
+                    {(props) => <Deliveries {...props} products={products} setProducts={setProducts} />}
                 </Tab.Screen>
             </Tab.Navigator>
         </NavigationContainer>
