@@ -20,7 +20,18 @@ export default function DeliveriesList ({ route, navigation }) {
         reloadDeliveries();
     }, []);
 
-    const listOfDeliveries = allDeliveries //TODO: sort by date?
+    let listOfDeliveries: JSX.Element[] = [
+        <View key={-1} style={Base.multilineMenuContainer}>
+            <Text style={{
+                ...Typography.infoText,
+                textAlign: 'center'
+                }}>
+                    No deliveries to display... 😰
+                </Text>
+        </View>
+    ];
+    if (allDeliveries.length > 0) {
+        listOfDeliveries = allDeliveries //TODO: sort by date?
         // .filter(delivery => Date.parse(delivery.delivery_date) < Date.now())
         .map((delivery, index) => {
             return <View key={index} style={Base.multilineMenuContainer}>
@@ -30,6 +41,7 @@ export default function DeliveriesList ({ route, navigation }) {
                 <Text>{delivery.comment}</Text>
             </View>;
         });
+    };
 
     return <ScrollView style={Base.base}>
         <Text style={Typography.header2}>Inleveranser</Text>
