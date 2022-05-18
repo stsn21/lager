@@ -93,8 +93,6 @@ export default function DeliveryForm({ navigation }) {
 
     return (
         <ScrollView style={{ ...Base.base }}>
-            <Text style={{ ...Typography.header2 }}>Ny inleverans</Text>
-
             <Text style={{ ...Typography.label }}>Produkt</Text>
             <ProductDropDown
                 products={products}
