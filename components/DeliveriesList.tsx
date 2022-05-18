@@ -44,7 +44,7 @@ export default function DeliveriesList ({ route, navigation }) {
         </View>
     ];
     if (allDeliveries.length > 0) {
-        listOfDeliveries = allDeliveries //TODO: sort by date?
+        listOfDeliveries = allDeliveries
         // .filter(delivery => Date.parse(delivery.delivery_date) < Date.now())
         .sort(sortByDateDescending)
         .map((delivery, index) => {
