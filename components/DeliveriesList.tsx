@@ -49,10 +49,10 @@ export default function DeliveriesList ({ route, navigation }) {
         .sort(sortByDateDescending)
         .map((delivery, index) => {
             return <View key={index} style={Base.multilineMenuContainer}>
-                <Text>{delivery.product_name}</Text>
-                <Text>{delivery.amount}</Text>
                 <Text>{delivery.delivery_date}</Text>
-                <Text>{delivery.comment}</Text>
+                <Text>{delivery.product_name}</Text>
+                <Text>Qty: {delivery.amount}</Text>
+                <Text>Comment: {delivery.comment}</Text>
             </View>;
         });
     };
