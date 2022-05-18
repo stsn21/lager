@@ -101,7 +101,7 @@ export default function DeliveryForm({ navigation }) {
                 setCurrentProduct={setCurrentProduct}
             />
 
-            <Text style={{ ...Typography.label }}>Amount</Text>
+            <Text style={{ ...Typography.label }}>Quantity</Text>
             <TextInput
                 style={{ ...Forms.input }}
                 onChangeText={(content: string) => {
