@@ -43,7 +43,10 @@ function DateDropDown(props) {
     return (
         <View>
             {Platform.OS === "android" && (
-                <Button onPress={showDatePicker} title="Show date picker" />
+                <Button onPress={showDatePicker}
+                    title="Show date picker"
+                    color={Base.accentColor}
+                />
             )}
             {(show || Platform.OS === "ios") && (
                 <DateTimePicker
@@ -135,6 +138,7 @@ export default function DeliveryForm({ navigation }) {
                 onPress={() => {
                     addDelivery();
                 }}
+                color={Base.accentColor}
             />
         </ScrollView>
     );

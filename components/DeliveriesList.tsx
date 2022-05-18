@@ -63,6 +63,7 @@ export default function DeliveriesList ({ route, navigation }) {
             onPress={() => {
                 navigation.navigate("New delivery");
             }}
+            color={Base.accentColor}
         />
         {listOfDeliveries}
     </ScrollView>;
