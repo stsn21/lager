@@ -43,7 +43,7 @@ function DateDropDown(props) {
     return (
         <View>
             {Platform.OS === "android" && (
-                <Button onPress={showDatePicker} title="Visa datumväljare" />
+                <Button onPress={showDatePicker} title="Show date picker" />
             )}
             {(show || Platform.OS === "ios") && (
                 <DateTimePicker
@@ -93,7 +93,7 @@ export default function DeliveryForm({ navigation }) {
 
     return (
         <ScrollView style={{ ...Base.base }}>
-            <Text style={{ ...Typography.label }}>Produkt</Text>
+            <Text style={{ ...Typography.label }}>Product</Text>
             <ProductDropDown
                 products={products}
                 delivery={delivery}
@@ -101,7 +101,7 @@ export default function DeliveryForm({ navigation }) {
                 setCurrentProduct={setCurrentProduct}
             />
 
-            <Text style={{ ...Typography.label }}>Antal</Text>
+            <Text style={{ ...Typography.label }}>Amount</Text>
             <TextInput
                 style={{ ...Forms.input }}
                 onChangeText={(content: string) => {
@@ -116,13 +116,13 @@ export default function DeliveryForm({ navigation }) {
                 keyboardType="numeric"
             />
 
-            <Text style={{ ...Typography.label }}>Leveransdatum</Text>
+            <Text style={{ ...Typography.label }}>Delivery date</Text>
             <DateDropDown
                 delivery={delivery}
                 setDelivery={setDelivery}
             />
 
-            <Text style={{ ...Typography.label }}>Kommentar</Text>
+            <Text style={{ ...Typography.label }}>Comment</Text>
             <TextInput
                 style={{ ...Forms.input }}
                 onChangeText={(content: string) => {
@@ -131,7 +131,7 @@ export default function DeliveryForm({ navigation }) {
                 value={delivery?.comment}
             />
 
-            <Button title="Gör inleverans"
+            <Button title="Create delivery"
                 onPress={() => {
                     addDelivery();
                 }}

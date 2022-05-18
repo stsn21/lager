@@ -21,3 +21,10 @@ export const infoText = {
 export const headerBar = {
     fontWeight: '300',
 };
+
+export const label = {
+    alignSelf: 'center',
+    fontWeight: '200',
+    fontSize: 24,
+    padding: 12,
+};
