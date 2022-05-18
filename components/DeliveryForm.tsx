@@ -88,7 +88,7 @@ export default function DeliveryForm({ navigation }) {
 
         await productModel.updateProduct(updatedProduct);
 
-        navigation.navigate("List", { reload: true });
+        navigation.navigate("All deliveries", { reload: true });
     }
 
     return (
