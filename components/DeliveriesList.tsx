@@ -58,13 +58,12 @@ export default function DeliveriesList ({ route, navigation }) {
     };
 
     return <ScrollView style={Base.base}>
-        <Text style={Typography.header2}>Inleveranser</Text>
-        {listOfDeliveries}
         <Button
             title="Skapa ny inleverans"
             onPress={() => {
                 navigation.navigate('Form');
             }}
         />
+        {listOfDeliveries}
     </ScrollView>;
 };
