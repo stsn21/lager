@@ -11,7 +11,7 @@ export default function Deliveries(props) {
         <Stack.Screen name="All deliveries">
             {(screenProps) => <DeliveriesList {...screenProps} products={props.products} setProducts={props.setProducts} />}
         </Stack.Screen>
-        <Stack.Screen name="Form">
+        <Stack.Screen name="New delivery">
             {(screenProps) => <DeliveryForm {...screenProps} products={props.products} setProducts={props.setProducts} />}
         </Stack.Screen>
     </Stack.Navigator>;
