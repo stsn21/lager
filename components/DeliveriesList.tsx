@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ScrollView, View, Button, Text } from "react-native";
+import Delivery from '../interfaces/delivery';
 import deliveryModel from "../models/deliveries"
 import { Base, Typography } from "../styles/index";
 
@@ -20,6 +21,18 @@ export default function DeliveriesList ({ route, navigation }) {
         reloadDeliveries();
     }, []);
 
+    function sortByDateDescending (a: Partial<Delivery>, b: Partial<Delivery>): number {
+        if (a.delivery_date !== undefined && b.delivery_date !== undefined) {
+            if (a.delivery_date > b.delivery_date) {
+                return -1;
+            };
+            if (a.delivery_date < b.delivery_date) {
+                return 1;
+            };
+        };
+        return 0;
+    }
+
     let listOfDeliveries: JSX.Element[] = [
         <View key={-1} style={Base.multilineMenuContainer}>
             <Text style={{
@@ -33,6 +46,7 @@ export default function DeliveriesList ({ route, navigation }) {
     if (allDeliveries.length > 0) {
         listOfDeliveries = allDeliveries //TODO: sort by date?
         // .filter(delivery => Date.parse(delivery.delivery_date) < Date.now())
+        .sort(sortByDateDescending)
         .map((delivery, index) => {
             return <View key={index} style={Base.multilineMenuContainer}>
                 <Text>{delivery.product_name}</Text>
