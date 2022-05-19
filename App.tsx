@@ -11,8 +11,8 @@ import { Base } from './styles/index';
 
 const routeIcons = {
     "Stock": "home",
-    "Pick": "list",
-    "Deliveries": "list",
+    "Pick": "file-tray-stacked",
+    "Deliveries": "arrow-down",
 };
 
 const Tab = createBottomTabNavigator();
