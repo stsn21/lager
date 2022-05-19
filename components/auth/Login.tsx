@@ -14,13 +14,11 @@ export default function Login({navigation, setIsLoggedIn}) {
         }
     }
 
-    return (
-        <AuthFields
-            auth={auth}
-            setAuth={setAuth}
-            submit={doLogin}
-            title="Logga in"
-            navigation={navigation}
-        />
-    );
+    return <AuthFields
+        auth={auth}
+        setAuth={setAuth}
+        submit={doLogin}
+        title="Logga in"
+        navigation={navigation}
+    />;
 };
