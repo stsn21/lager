@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import Pick from "./components/Pick";
 import Deliveries from './components/Deliveries';
 import Auth from './components/auth/Auth';
+import authModel from './models/auth'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
