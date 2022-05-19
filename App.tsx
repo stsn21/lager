@@ -6,7 +6,7 @@ import Deliveries from './components/Deliveries';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Base } from './styles/index';
 
 const routeIcons = {
@@ -19,6 +19,11 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
     const [products, setProducts] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
+
+    useEffect(async () => {
+        setIsLoggedIn(await authModel.loggedIn());
+    }, []);
 
     return <SafeAreaProvider>
         <NavigationContainer>
@@ -45,6 +50,12 @@ export default function App() {
                 <Tab.Screen name="Deliveries" options={{ headerShown: false }}>
                     {(props) => <Deliveries {...props} products={products} setProducts={setProducts} />}
                 </Tab.Screen>
+                {isLoggedIn ?
+                    <Tab.Screen name="Faktura" component={Invoices} /> :
+                    <Tab.Screen name="Logga in">
+                        {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
+                    </Tab.Screen>
+                }
             </Tab.Navigator>
         </NavigationContainer>
         <StatusBar style="auto" />
