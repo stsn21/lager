@@ -14,6 +14,8 @@ const routeIcons = {
     "Stock": "home",
     "Pick": "file-tray-stacked",
     "Deliveries": "arrow-down",
+    "Logga in": "log-in",
+    "Faktura": "receipt",
 };
 
 const Tab = createBottomTabNavigator();
