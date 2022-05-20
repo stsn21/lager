@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import Pick from "./components/Pick";
 import Deliveries from './components/Deliveries';
 import Auth from './components/auth/Auth';
+import Invoices from './components/Invoices';
 
 import authModel from './models/auth'
 
