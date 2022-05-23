@@ -1,4 +1,4 @@
-// PLACEHOLDER!!!! TODO: REPLACE!
+// TODO: INVOICE SCREEN!
 
 import { ScrollView, Button } from "react-native";
 import { Base } from "../styles/index";
