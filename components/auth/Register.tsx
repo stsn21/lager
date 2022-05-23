@@ -1,40 +1,24 @@
-import { View, Text, TextInput, Button } from "react-native";
-import { Typography, Forms, Base } from '../../styles';
+import Auth from '../../interfaces/auth';
+import { useState } from 'react';
+import AuthModel from '../../models/auth';
+import AuthFields from './AuthFields';
 
-export default function AuthFields({ auth, setAuth, title, submit, navigation}) {
-    return <View style={Base.base}>
-        <Text style={Typography.header2}>{title}</Text>
-        <Text style={Typography.label}>E-post</Text>
-        <TextInput
-            style={Forms.input}
-            onChangeText={(content: string) => {
-                setAuth({ ...auth, email: content })
-            }}
-            value={auth?.email}
-            keyboardType="email-address"
-        />
-        <Text style={Typography.label}>Lösenord</Text>
-        <TextInput
-            style={Forms.input}
-            onChangeText={(content: string) => {
-                setAuth({ ...auth, password: content })
-            }}
-            value={auth?.password}
-            secureTextEntry={true}
-        />
-        <Button
-            title={title}
-            onPress={() => {
-                submit();
-            }}
-        />
-        {title === "Logga in" &&
-            <Button
-                title="Registrera istället"
-                onPress={() => {
-                    navigation.navigate("Register");
-                }}
-            />
-        }
-    </View>;
+export default function Register({navigation, setIsLoggedIn}) {
+    const [auth, setAuth] = useState<Partial<Auth>>({});
+
+    async function doRegister() {
+        if (auth.email && auth.password) {
+            const result = await AuthModel.register(auth.email, auth.password);
+            setIsLoggedIn(true);
+            navigation.navigate("Faktura");
+        };
+    }
+
+    return <AuthFields
+        auth={auth}
+        setAuth={setAuth}
+        submit={doRegister}
+        title="Register"
+        navigation={navigation}
+    />;
 };

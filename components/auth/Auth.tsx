@@ -10,6 +10,8 @@ export default function Auth(props) {
         <Stack.Screen name="Login">
             {(screenProps) => <Login {...screenProps} setIsLoggedIn={props.setIsLoggedIn} />}
         </Stack.Screen>
-        <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Register">
+            {(screenProps) => <Register {...screenProps} setIsLoggedIn={props.setIsLoggedIn} />}
+        </Stack.Screen>
     </Stack.Navigator>;
 };
