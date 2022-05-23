@@ -1,3 +1,6 @@
+// TODO: Rename file to PickOrder, fix import paths
+// TODO?: much of this and InvoiceOrder might be put into a common import
+
 import { View, Text, Button } from "react-native";
 import { Base, Typography } from '../styles';
 import orderModel from "../models/orders";
@@ -5,6 +8,7 @@ import { useEffect, useState } from 'react';
 import productModel from '../models/products';
 import { DataTable } from "react-native-paper";
 
+// TODO: move this to styles
 const columnStyles = {
     name: [
         Base.cell,
@@ -63,7 +67,7 @@ export default function PickList({ route, navigation, setProducts }) {
                 <Text style={Typography.infoText}>{ item['name'] }</Text>
             </View>
             <DataTable.Cell style={[columnStyles.qty, qtyInStockStyle]} numeric>
-                <Text style={[Typography.infoText]}>{ item['amount'] }</Text>
+                <Text style={Typography.infoText}>{ item['amount'] }</Text>
             </DataTable.Cell>
             <DataTable.Cell style={columnStyles.location}>
                 <Text style={Typography.infoText}>{ item['location'] }</Text>
@@ -98,13 +102,13 @@ export default function PickList({ route, navigation, setProducts }) {
 
         <Text style={Typography.header2}>Items</Text>
         <DataTable>
-                <DataTable.Header>
-                    <DataTable.Title style={columnStyles.name}>Name</DataTable.Title>
-                    <DataTable.Title style={columnStyles.qty} numeric>Qty</DataTable.Title>
-                    <DataTable.Title style={columnStyles.location} numeric>Location</DataTable.Title>
-                </DataTable.Header>
-                {orderItemsList}
-            </DataTable>
+            <DataTable.Header>
+                <DataTable.Title style={columnStyles.name}>Name</DataTable.Title>
+                <DataTable.Title style={columnStyles.qty} numeric>Qty</DataTable.Title>
+                <DataTable.Title style={columnStyles.location} numeric>Location</DataTable.Title>
+            </DataTable.Header>
+            {orderItemsList}
+        </DataTable>
 
         <Button title="Pack order" color={Base.accentColor} onPress={pick} disabled={!allInStock} />
     </View>;
