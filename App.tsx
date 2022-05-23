@@ -1,3 +1,5 @@
+// TODO: fix unhandled promise rejection on start
+
 import { useState, useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -58,9 +60,11 @@ export default function App() {
                     {(props) => <Deliveries {...props} products={products} setProducts={setProducts} />}
                 </Tab.Screen>
                 {isLoggedIn ?
-                    <Tab.Screen name="Faktura" component={Invoices} /> :
+                    <Tab.Screen name="Faktura">
+                        {(props) => <Invoices {...props} setIsLoggedIn={setIsLoggedIn} />}
+                    </Tab.Screen> :
                     <Tab.Screen name="Logga in">
-                        {() => <Auth setIsLoggedIn={setIsLoggedIn} />}
+                        {(props) => <Auth {...props} setIsLoggedIn={setIsLoggedIn} />}
                     </Tab.Screen>
                 }
             </Tab.Navigator>
