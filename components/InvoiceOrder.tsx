@@ -27,7 +27,7 @@ const columnStyles = {
     ]
 };
 
-export default function InvoiceOrder({ route, navigation, setProducts }) {
+export default function InvoiceOrder({ route, navigation }) {
     const { order } = route.params;
 
     async function invoice() {

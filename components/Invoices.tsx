@@ -69,7 +69,7 @@ export default function Invoices(props) {
             {(screenProps) => <ToInvoice {...screenProps} setIsLoggedIn={props.setIsLoggedIn} />}
         </Stack.Screen>
         <Stack.Screen name="Invoice order">
-            {(screenProps) => <InvoiceOrder {...screenProps} setProducts={props.setProducts} setIsLoggedIn={props.setIsLoggedIn} />}
+            {(screenProps) => <InvoiceOrder {...screenProps} />}
         </Stack.Screen>
     </Stack.Navigator>;
 };
