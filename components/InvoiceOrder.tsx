@@ -80,6 +80,6 @@ export default function InvoiceOrder({ route, navigation }) {
             {orderItemsList}
         </DataTable>
         {/* TODO: Add date picker */}
-        <Button title="Invoice order" color={Base.accentColor} onPress={invoice}/>
+        <Button title="Create invoice for order" color={Base.accentColor} onPress={invoice}/>
     </View>;
 };
