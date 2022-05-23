@@ -12,7 +12,7 @@ const orders = {
     },
     pickOrder: async function pickOrder(order: Partial<Order>) {
         await Promise.all(order.order_items.map(async (order_item: Partial<OrderItem>) => {
-            const newStock = order_item.stock - order_item.amount
+            const newStock = order_item.stock - order_item.amount;
 
             const changedProduct = {
                 id: order_item.product_id,
@@ -30,6 +30,18 @@ const orders = {
             status_id: 200,
             api_key: config.api_key,
         };
+
+        await orders.updateOrder(changedOrder);
+    },
+    invoiceOrder: async function invoiceOrder(order: Partial<Order>) {
+        const changedOrder = {
+            id: order.id,
+            name: order.name,
+            status_id: 600,
+            api_key: config.api_key,
+        };
+
+        // TODO: Probably call a method from invoices model here to add an invoice.
 
         await orders.updateOrder(changedOrder);
     },
