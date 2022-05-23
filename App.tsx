@@ -50,6 +50,7 @@ export default function App() {
                     tabBarStyle: {padding: 3, backgroundColor: Base.navigationContainerBg}
                 })}
             >
+                {/* TODO?: Clean up redundant/unecessary prop passing, but for now if it ain't broke don't fix it */}
                 <Tab.Screen name="Stock">
                     {(props) => <Home {...props} products={products} setProducts={setProducts} />}
                 </Tab.Screen>
