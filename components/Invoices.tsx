@@ -1,16 +1,21 @@
 // PLACEHOLDER!!!! TODO: REPLACE!
 
-import { useState, useEffect } from 'react';
-import { ScrollView, View, Button, Text } from "react-native";
-import { Base, Typography } from "../styles/index";
+import { ScrollView, Button } from "react-native";
+import { Base } from "../styles/index";
 
 import authModel from '../models/auth';
 
-export default function Invoices ({ route, navigation }) {
+export default function Invoices ({ route, navigation, setIsLoggedIn }) {
+    async function doLogout() {
+        await authModel.logout();
+        setIsLoggedIn(false);
+        navigation.navigate("Logga in", {screen: "Login"});
+    }
+
     return <ScrollView style={Base.base}>
         <Button
             title="Log out"
-            onPress={authModel.logout}
+            onPress={doLogout}
             color={Base.accentColor}
         />
     </ScrollView>;
