@@ -8,9 +8,9 @@ export default function Register({navigation, setIsLoggedIn}) {
 
     async function doRegister() {
         if (auth.email && auth.password) {
-            const result = await AuthModel.register(auth.email, auth.password);
+            await AuthModel.register(auth.email, auth.password);
             setIsLoggedIn(true);
-            navigation.navigate("Faktura");
+            navigation.navigate("Invoices");
         };
     }
 

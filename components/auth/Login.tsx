@@ -8,9 +8,9 @@ export default function Login({navigation, setIsLoggedIn}) {
 
     async function doLogin() {
         if (auth.email && auth.password) {
-            const result = await AuthModel.login(auth.email, auth.password);
+            await AuthModel.login(auth.email, auth.password);
             setIsLoggedIn(true);
-            navigation.navigate("Faktura");
+            navigation.navigate("Invoices");
         };
     }
 
@@ -18,7 +18,7 @@ export default function Login({navigation, setIsLoggedIn}) {
         auth={auth}
         setAuth={setAuth}
         submit={doLogin}
-        title="Logga in"
+        title="Log in"
         navigation={navigation}
     />;
 };

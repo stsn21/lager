@@ -3,8 +3,6 @@
 import { View, Text, Button } from "react-native";
 import { Base, Typography } from '../styles';
 import orderModel from "../models/orders";
-import { useEffect, useState } from 'react';
-import productModel from '../models/products';
 import { DataTable } from "react-native-paper";
 
 // TODO: move this to styles (this one lacks location property though)
@@ -80,6 +78,6 @@ export default function InvoiceOrder({ route, navigation }) {
             {orderItemsList}
         </DataTable>
         {/* TODO: Add date picker */}
-        <Button title="Create invoice for order" color={Base.accentColor} onPress={invoice}/>
+        <Button title="Create invoice" color={Base.accentColor} onPress={invoice}/>
     </View>;
 };

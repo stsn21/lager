@@ -28,7 +28,7 @@ export default function AuthFields({ auth, setAuth, title, submit, navigation}) 
                 submit();
             }}
         />
-        {title === "Logga in" &&
+        {title === "Log in" &&
             <Button
                 title="Registrera istället"
                 onPress={() => {

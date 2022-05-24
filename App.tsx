@@ -21,8 +21,8 @@ const routeIcons = {
     "Stock": "home",
     "Pick": "file-tray-stacked",
     "Deliveries": "arrow-down",
-    "Logga in": "log-in",
-    "Faktura": "receipt",
+    "Log in": "log-in",
+    "Invoices": "receipt",
 };
 
 const Tab = createBottomTabNavigator();
@@ -62,11 +62,11 @@ export default function App() {
                     {(props) => <Deliveries {...props} products={products} setProducts={setProducts} />}
                 </Tab.Screen>
                 {isLoggedIn ?
-                    <Tab.Screen name="Faktura">
+                    <Tab.Screen name="Invoices">
                         {(props) => <Invoices {...props} setIsLoggedIn={setIsLoggedIn} />}
                     </Tab.Screen> :
-                    <Tab.Screen name="Logga in">
-                        {(props) => <Auth {...props} setIsLoggedIn={setIsLoggedIn} />}
+                    <Tab.Screen name="Log in">
+                        {(props) => <Auth {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
                     </Tab.Screen>
                 }
             </Tab.Navigator>
