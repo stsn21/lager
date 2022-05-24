@@ -26,7 +26,7 @@ export default function InvoiceList({ route, navigation, setIsLoggedIn }) {
         <Button
             title="New invoice"
             onPress={() => {
-                navigation.navigate("Orders ready to invoice", { reload: true });
+                navigation.navigate("Orders ready to invoice");
             }}
             color={Base.accentColor}
         />
