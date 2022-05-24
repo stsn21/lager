@@ -9,10 +9,10 @@ import deliveryModel from '../models/deliveries';
 // for ProductDropDown component
 import { Picker } from '@react-native-picker/picker';
 import productModel from "../models/products";
-import moment from 'moment';
 
 // for DateDropDown component
 import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
 
 function ProductDropDown(props) {
     let productsHash: any = {};
@@ -91,7 +91,7 @@ export default function DeliveryForm({ navigation }) {
 
         await productModel.updateProduct(updatedProduct);
 
-        navigation.navigate("All deliveries", { reload: true });
+        navigation.navigate("All deliveries");
     }
 
     return (
@@ -120,10 +120,7 @@ export default function DeliveryForm({ navigation }) {
             />
 
             <Text style={{ ...Typography.label }}>Delivery date</Text>
-            <DateDropDown
-                delivery={delivery}
-                setDelivery={setDelivery}
-            />
+            <DateDropDown delivery={delivery} setDelivery={setDelivery} />
 
             <Text style={{ ...Typography.label }}>Comment</Text>
             <TextInput
