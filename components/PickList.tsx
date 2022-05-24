@@ -47,7 +47,7 @@ export default function PickList({ route, navigation, setProducts }) {
     async function pick() {
         await orderModel.pickOrder(order);
         setProducts(await productModel.getProducts());
-        navigation.navigate("Orders ready to pick", { reload: true });
+        navigation.navigate("Orders ready to pick");
     }
 
     // Reduces productsList to an object of format product_id: stock
