@@ -7,7 +7,6 @@ import Invoice from '../interfaces/invoice';
 import invoicesModel from '../models/invoices';
 import authModel from '../models/auth';
 
-// TODO: list of invoices, reload invoices
 export default function InvoiceList({ route, navigation, setIsLoggedIn }) {
     const [allInvoices, setAllInvoices] = useState([]);
 
