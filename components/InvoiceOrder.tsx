@@ -1,9 +1,16 @@
 // TODO?: much of this and PickList might be put into a common import
 
-import { View, Text, Button } from "react-native";
-import { Base, Typography } from '../styles';
-import orderModel from "../models/orders";
+import { ScrollView, Text, TextInput, Button, Platform, View } from "react-native";
+import { useState, useEffect } from 'react';
 import { DataTable } from "react-native-paper";
+import { Base, Typography, Forms } from '../styles';
+
+import orderModel from "../models/orders";
+
+// for DateDropDown component
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment';
+import Invoice from "../interfaces/invoice";
 
 // TODO: move this to styles (this one lacks location property though)
 const columnStyles = {
@@ -25,12 +32,50 @@ const columnStyles = {
     ]
 };
 
+function DateDropDown(props) {
+    const [dropDownDate, setDropDownDate] = useState<Date>(new Date());
+    const [show, setShow] = useState<Boolean>(false);
+
+    const showDatePicker = () => {
+        setShow(true);
+    };
+
+    return (
+        <View>
+            {Platform.OS === "android" && (
+                <Button onPress={showDatePicker}
+                    title="Show date picker"
+                    color={Base.accentColor}
+                />
+            )}
+            {(show || Platform.OS === "ios") && (
+                <DateTimePicker
+                    onChange={(event, date) => {
+                        setDropDownDate(date);
+
+                        props.setInvoice({
+                            ...props.invoice,
+                            due_date: moment(dropDownDate).format("YYYY-MM-DD"),
+                        });
+
+                        setShow(false);
+                    }}
+                    value={dropDownDate}
+                />
+            )}
+        </View>
+    );
+}
+
 export default function InvoiceOrder({ route, navigation }) {
     const { order } = route.params;
+    const [invoice, setInvoice] = useState<Partial<Invoice>>({
+        creation_date: moment().format("YYYY-MM-DD")
+    });
 
-    async function invoice() {
-        await orderModel.invoiceOrder(order);
-        navigation.navigate("Orders ready to invoice", { reload: true });
+    async function doInvoice() {
+        await orderModel.invoiceOrder(order, invoice);
+        navigation.navigate("Orders ready to invoice");
     }
 
     const orderItemsList = order.order_items.map((item, index) => {
@@ -45,7 +90,7 @@ export default function InvoiceOrder({ route, navigation }) {
     });
 
     return <View style={Base.base}>
-        <Text style={Typography.header2}>Info</Text>
+        <Text style={ Typography.label }>Info</Text>
         <DataTable>
             <DataTable.Row>
                 <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
@@ -69,7 +114,7 @@ export default function InvoiceOrder({ route, navigation }) {
             </DataTable.Row>
         </DataTable>
 
-        <Text style={Typography.header2}>Items</Text>
+        <Text style={ Typography.label }>Items</Text>
         <DataTable>
             <DataTable.Header>
                 <DataTable.Title style={columnStyles.name}>Name</DataTable.Title>
@@ -77,7 +122,8 @@ export default function InvoiceOrder({ route, navigation }) {
             </DataTable.Header>
             {orderItemsList}
         </DataTable>
-        {/* TODO: Add date picker */}
-        <Button title="Create invoice" color={Base.accentColor} onPress={invoice}/>
+        <Text style={{ ...Typography.label }}>Due date</Text>
+        <DateDropDown invoice={invoice} setInvoice={setInvoice} />
+        <Button title="Invoice this order" color={Base.accentColor} onPress={doInvoice}/>
     </View>;
 };

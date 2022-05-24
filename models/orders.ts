@@ -1,7 +1,9 @@
 import config from "../config/config.json";
-import products from "./products";
+import productsModel from "./products";
+import invoicesModel from "./invoices";
 import Order from "../interfaces/order";
 import OrderItem from "../interfaces/order_item";
+import Invoice from "../interfaces/invoice";
 
 const orders = {
     getOrders: async function getOrders(): Promise<Order[]> {
@@ -21,7 +23,7 @@ const orders = {
                 api_key: config.api_key,
             };
 
-            await products.updateProduct(changedProduct);
+            await productsModel.updateProduct(changedProduct);
         }));
 
         const changedOrder = {
@@ -33,15 +35,18 @@ const orders = {
 
         await orders.updateOrder(changedOrder);
     },
-    invoiceOrder: async function invoiceOrder(order: Partial<Order>) {
+    invoiceOrder: async function invoiceOrder(
+        order: Partial<Order>,
+        invoice: Partial<Invoice>
+    ) {
+        await invoicesModel.addInvoiceFromOrder(order, invoice);
+
         const changedOrder = {
             id: order.id,
             name: order.name,
             status_id: 600,
             api_key: config.api_key,
         };
-
-        // TODO: Probably call a method from invoices model here to add an invoice.
 
         await orders.updateOrder(changedOrder);
     },
