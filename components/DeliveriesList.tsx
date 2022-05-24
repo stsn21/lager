@@ -1,25 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { ScrollView, View, Button, Text } from "react-native";
 import Delivery from '../interfaces/delivery';
 import deliveryModel from "../models/deliveries"
 import { Base, Typography } from "../styles/index";
 
 export default function DeliveriesList ({ route, navigation }) {
-    const { reload } = route.params || false;
     const [allDeliveries, setAllDeliveries] = useState([]);
 
-    if (reload) {
-        reloadDeliveries();
-        route.params = false;
-    };
+    useFocusEffect(
+        useCallback(() => {
+            reloadDeliveries();
+        }, [])
+    );
 
     async function reloadDeliveries() {
         setAllDeliveries(await deliveryModel.getDeliveries());
     };
-
-    useEffect(() => {
-        reloadDeliveries();
-    }, []);
 
     function sortByDateDescending (a: Partial<Delivery>, b: Partial<Delivery>): number {
         if (a.delivery_date !== undefined && b.delivery_date !== undefined) {
@@ -38,16 +35,16 @@ export default function DeliveriesList ({ route, navigation }) {
             <Text style={{
                 ...Typography.infoText,
                 textAlign: 'center'
-                }}>
-                    No deliveries to display... 😰
-                </Text>
+            }}>
+                No deliveries to display... 😰
+            </Text>
         </View>
     ];
     if (allDeliveries.length > 0) {
         listOfDeliveries = allDeliveries
         // .filter(delivery => Date.parse(delivery.delivery_date) < Date.now())
         .sort(sortByDateDescending)
-        .map((delivery, index) => {
+        .map((delivery: Partial<Delivery>, index: number) => {
             return <View key={index} style={Base.multilineMenuContainer}>
                 <Text>{delivery.delivery_date}</Text>
                 <Text>{delivery.product_name}</Text>
