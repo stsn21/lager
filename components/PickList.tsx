@@ -76,7 +76,7 @@ export default function PickList({ route, navigation, setProducts }) {
     });
 
     return <View style={Base.base}>
-        <Text style={Typography.header2}>Info</Text>
+        <Text style={ Typography.label }>Info</Text>
         <DataTable>
             <DataTable.Row>
                 <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
@@ -100,7 +100,7 @@ export default function PickList({ route, navigation, setProducts }) {
             </DataTable.Row>
         </DataTable>
 
-        <Text style={Typography.header2}>Items</Text>
+        <Text style={ Typography.label }>Items</Text>
         <DataTable>
             <DataTable.Header>
                 <DataTable.Title style={columnStyles.name}>Name</DataTable.Title>
