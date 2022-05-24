@@ -7,7 +7,7 @@ import orderModel from '../models/orders';
 import { Base } from '../styles/index'
 import { DataTable } from 'react-native-paper';
 
-export default function OrderList({ route, navigation }) {
+export default function ToPickList({ route, navigation }) {
     const [allOrders, setAllOrders] = useState([]);
 
     useFocusEffect(
