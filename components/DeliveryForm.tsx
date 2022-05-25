@@ -36,6 +36,14 @@ function DateDropDown(props) {
     const [dropDownDate, setDropDownDate] = useState<Date>(new Date());
     const [show, setShow] = useState<Boolean>(false);
 
+    useEffect(async () => {
+        const formattedDate = moment(dropDownDate).format("YYYY-MM-DD");
+        props.setDelivery({
+            ...props.delivery,
+            delivery_date: formattedDate,
+        });
+    }, [dropDownDate]);
+
     const showDatePicker = () => {
         setShow(true);
     };
@@ -52,12 +60,6 @@ function DateDropDown(props) {
                 <DateTimePicker
                     onChange={(event, date) => {
                         setDropDownDate(date);
-
-                        props.setDelivery({
-                            ...props.delivery,
-                            delivery_date: moment(dropDownDate).format("YYYY-MM-DD"),
-                        });
-
                         setShow(false);
                     }}
                     value={dropDownDate}
@@ -67,19 +69,23 @@ function DateDropDown(props) {
     );
 }
 
-export default function DeliveryForm({ navigation }) {
-    const [products, setProducts] = useState<Product[]>([]);
-    const [delivery, setDelivery] = useState<Partial<Delivery>>({});
+export default function DeliveryForm({ navigation, products, setProducts }) {
+    const [delivery, setDelivery] = useState<Partial<Delivery>>({
+        delivery_date: moment(new Date()).format("YYYY-MM-DD"),
+    });
     const [currentProduct, setCurrentProduct] = useState<Partial<Product>>({});
 
     useEffect(async () => {
-        const productChoices = (await productModel.getProducts());
-        setProducts(productChoices);
-        setDelivery({
-            product_id: productChoices[0].id,
-            delivery_date: moment(new Date()).format("YYYY-MM-DD"),
-        });
+        setProducts(await productModel.getProducts());
     }, []);
+
+    useEffect(async () => {
+        setCurrentProduct(products[0]);
+        setDelivery({
+            ...delivery,
+            product_id: products[0].id,
+        });
+    }, [products]);
 
     async function addDelivery() {
         await deliveryModel.addDelivery(delivery);

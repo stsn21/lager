@@ -1,42 +1,12 @@
-// TODO: Rename file to PickOrder, fix import paths
-// TODO?: much of this and InvoiceOrder might be put into a common import
-
 import { View, Text, Button } from "react-native";
-import { Base, Typography } from '../styles';
-import orderModel from "../models/orders";
 import { useEffect, useState } from 'react';
-import productModel from '../models/products';
 import { DataTable } from "react-native-paper";
+import { Base, Typography, Tables } from '../styles';
 
-// TODO: move this to styles
-const columnStyles = {
-    name: [
-        Base.cell,
-        {
-            flexBasis: 10,
-            flexGrow: 2,
-            flexShrink: 10,
-        }
-    ],
-    qty: [
-        Base.cell,
-        {
-            flexBasis: 1,
-            flexGrow: 0.5,
-            flexShrink: 0,
-        }
-    ],
-    location: [
-        Base.cell,
-        {
-            flexBasis: 1,
-            flexGrow: 0.5,
-            flexShrink: 0,
-        }
-    ]
-};
+import productModel from '../models/products';
+import orderModel from "../models/orders";
 
-export default function PickList({ route, navigation, setProducts }) {
+export default function PickOrder({ route, navigation, setProducts }) {
     const { order } = route.params;
     const [productsList, setProductsList] = useState([]);
 
@@ -47,7 +17,7 @@ export default function PickList({ route, navigation, setProducts }) {
     async function pick() {
         await orderModel.pickOrder(order);
         setProducts(await productModel.getProducts());
-        navigation.navigate("Orders ready to pick");
+        navigation.navigate("Orders yet to be picked");
     }
 
     // Reduces productsList to an object of format product_id: stock
@@ -63,20 +33,20 @@ export default function PickList({ route, navigation, setProducts }) {
         };
 
         return <DataTable.Row key={index}>
-            <View style={columnStyles.name}>
+            <View style={Tables.orderItemsColumnFlex.name}>
                 <Text style={Typography.infoText}>{ item['name'] }</Text>
             </View>
-            <DataTable.Cell style={[columnStyles.qty, qtyInStockStyle]} numeric>
+            <DataTable.Cell style={[Tables.orderItemsColumnFlex.qty, qtyInStockStyle]} numeric>
                 <Text style={Typography.infoText}>{ item['amount'] }</Text>
             </DataTable.Cell>
-            <DataTable.Cell style={columnStyles.location}>
+            <DataTable.Cell style={Tables.orderItemsColumnFlex.location}>
                 <Text style={Typography.infoText}>{ item['location'] }</Text>
             </DataTable.Cell>
         </DataTable.Row>;
     });
 
     return <View style={Base.base}>
-        <Text style={ Typography.label }>Info</Text>
+        <Text style={ Typography.label }>Order { order['id'] }</Text>
         <DataTable>
             <DataTable.Row>
                 <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
@@ -103,9 +73,9 @@ export default function PickList({ route, navigation, setProducts }) {
         <Text style={ Typography.label }>Items</Text>
         <DataTable>
             <DataTable.Header>
-                <DataTable.Title style={columnStyles.name}>Name</DataTable.Title>
-                <DataTable.Title style={columnStyles.qty} numeric>Qty</DataTable.Title>
-                <DataTable.Title style={columnStyles.location} numeric>Location</DataTable.Title>
+                <DataTable.Title style={Tables.orderItemsColumnFlex.name}>Name</DataTable.Title>
+                <DataTable.Title style={Tables.orderItemsColumnFlex.qty} numeric>Qty</DataTable.Title>
+                <DataTable.Title style={Tables.orderItemsColumnFlex.location} numeric>Location</DataTable.Title>
             </DataTable.Header>
             {orderItemsList}
         </DataTable>

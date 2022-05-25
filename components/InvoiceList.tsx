@@ -20,18 +20,15 @@ export default function InvoiceList({ route, navigation, setIsLoggedIn }) {
         setAllInvoices(await invoicesModel.getInvoices());
     };
 
-    // TODO?
-    // function sortByDateDescending (a: Partial<Delivery>, b: Partial<Delivery>): number {
-    //     if (a.delivery_date !== undefined && b.delivery_date !== undefined) {
-    //         if (a.delivery_date > b.delivery_date) {
-    //             return -1;
-    //         };
-    //         if (a.delivery_date < b.delivery_date) {
-    //             return 1;
-    //         };
-    //     };
-    //     return 0;
-    // }
+    function sortByIDDescending (a: Partial<Invoice>, b: Partial<Invoice>): number {
+        if (a.id > b.id) {
+            return -1;
+        };
+        if (a.id < b.id) {
+            return 1;
+        };
+        return 0;
+    }
 
     let listOfInvoices: JSX.Element[] = [
         <View key={-1} style={Base.multilineMenuContainer}>
@@ -45,7 +42,7 @@ export default function InvoiceList({ route, navigation, setIsLoggedIn }) {
     ];
     if (allInvoices.length > 0) {
         listOfInvoices = allInvoices
-        // .sort(sortByDateDescending)
+        .sort(sortByIDDescending)
         .map((invoice: Partial<Invoice>, index: number) => {
             return <View key={index} style={Base.multilineMenuContainer}>
                 <Text>Invoice ID: {invoice.id}</Text>
@@ -71,15 +68,15 @@ export default function InvoiceList({ route, navigation, setIsLoggedIn }) {
 
     return <ScrollView style={Base.base}>
         <Button
-            title="Log out"
-            onPress={doLogout}
-            color={Base.accentColor}
-        />
-        <Button
             title="New invoice..."
             onPress={() => {
                 navigation.navigate("Orders ready to invoice");
             }}
+            color={Base.accentColor}
+        />
+        <Button
+            title="Log out"
+            onPress={doLogout}
             color={Base.accentColor}
         />
         {listOfInvoices}

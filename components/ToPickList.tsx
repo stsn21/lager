@@ -1,14 +1,11 @@
-// TODO: Move file contents to Pick and fix imports (confusing name)
-
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import { View, Button } from "react-native";
 import orderModel from '../models/orders';
 import { Base } from '../styles/index'
 import { DataTable } from 'react-native-paper';
 
-export default function ToPickList({ route, navigation }) {
-    const [allOrders, setAllOrders] = useState([]);
+export default function ToPickList({ route, navigation, allOrders, setAllOrders }) {
 
     useFocusEffect(
         useCallback(() => {
@@ -25,7 +22,7 @@ export default function ToPickList({ route, navigation }) {
         .map((order, index) => {
             return <DataTable.Row key={index}>
                 <DataTable.Cell style={Base.container}>
-                    <Button title={order.name} key={index} color={Base.accentColor} onPress={() => {
+                    <Button title={`${order.name} (${order.id})`} key={index} color={Base.accentColor} onPress={() => {
                         navigation.navigate('Order details', {
                             order: order
                         });

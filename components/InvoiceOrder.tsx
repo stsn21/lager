@@ -1,9 +1,7 @@
-// TODO?: much of this and PickList might be put into a common import
-
-import { ScrollView, Text, TextInput, Button, Platform, View } from "react-native";
+import { Text, Button, Platform, View } from "react-native";
 import { useState, useEffect } from 'react';
 import { DataTable } from "react-native-paper";
-import { Base, Typography, Forms } from '../styles';
+import { Base, Typography, Tables } from '../styles';
 
 import orderModel from "../models/orders";
 
@@ -12,39 +10,33 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import moment from 'moment';
 import Invoice from "../interfaces/invoice";
 
-// TODO: move this to styles (this one lacks location property though)
-const columnStyles = {
-    name: [
-        Base.cell,
-        {
-            flexBasis: 10,
-            flexGrow: 2,
-            flexShrink: 10,
-        }
-    ],
-    qty: [
-        Base.cell,
-        {
-            flexBasis: 1,
-            flexGrow: 0.5,
-            flexShrink: 0,
-        }
-    ]
-};
+function nowPlus30Days(): Date {
+    let date = new Date();
+    date.setDate(date.getDate() + 30);
+    return date;
+}
 
 function DateDropDown(props) {
-    const [dropDownDate, setDropDownDate] = useState<Date>(new Date());
+    const [dropDownDate, setDropDownDate] = useState<Date>(nowPlus30Days());
     const [show, setShow] = useState<Boolean>(false);
+
+    useEffect(async () => {
+        const formattedDate = moment(dropDownDate).format("YYYY-MM-DD");
+        props.setInvoice({
+            ...props.invoice,
+            due_date: formattedDate,
+        });
+    }, [dropDownDate]);
 
     const showDatePicker = () => {
         setShow(true);
     };
 
     return (
-        <View>
+        <View style={{marginBottom: 12}}>
             {Platform.OS === "android" && (
                 <Button onPress={showDatePicker}
-                    title="Show date picker"
+                    title="Show due date picker"
                     color={Base.accentColor}
                 />
             )}
@@ -52,12 +44,6 @@ function DateDropDown(props) {
                 <DateTimePicker
                     onChange={(event, date) => {
                         setDropDownDate(date);
-
-                        props.setInvoice({
-                            ...props.invoice,
-                            due_date: moment(dropDownDate).format("YYYY-MM-DD"),
-                        });
-
                         setShow(false);
                     }}
                     value={dropDownDate}
@@ -80,17 +66,17 @@ export default function InvoiceOrder({ route, navigation }) {
 
     const orderItemsList = order.order_items.map((item, index) => {
         return <DataTable.Row key={index}>
-            <View style={columnStyles.name}>
+            <View style={Tables.orderItemsColumnFlex.name}>
                 <Text style={Typography.infoText}>{ item['name'] }</Text>
             </View>
-            <DataTable.Cell style={columnStyles.qty} numeric>
+            <DataTable.Cell style={Tables.orderItemsColumnFlex.qty} numeric>
                 <Text style={Typography.infoText}>{ item['amount'] }</Text>
             </DataTable.Cell>
         </DataTable.Row>;
     });
 
     return <View style={Base.base}>
-        <Text style={ Typography.label }>Info</Text>
+        <Text style={ Typography.label }>Order { order['id'] }</Text>
         <DataTable>
             <DataTable.Row>
                 <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
@@ -117,8 +103,8 @@ export default function InvoiceOrder({ route, navigation }) {
         <Text style={ Typography.label }>Items</Text>
         <DataTable>
             <DataTable.Header>
-                <DataTable.Title style={columnStyles.name}>Name</DataTable.Title>
-                <DataTable.Title style={columnStyles.qty} numeric>Qty</DataTable.Title>
+                <DataTable.Title style={Tables.orderItemsColumnFlex.name}>Name</DataTable.Title>
+                <DataTable.Title style={Tables.orderItemsColumnFlex.qty} numeric>Qty</DataTable.Title>
             </DataTable.Header>
             {orderItemsList}
         </DataTable>

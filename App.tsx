@@ -1,5 +1,3 @@
-// TODO: should orders state be lifted up?
-
 import { useState, useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
@@ -28,6 +26,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
     const [products, setProducts] = useState([]);
+    const [allOrders, setAllOrders] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState<Boolean>(false);
 
     useEffect(async () => {
@@ -50,21 +49,24 @@ export default function App() {
                     tabBarStyle: {padding: 3, backgroundColor: Base.navigationContainerBg}
                 })}
             >
-                {/* TODO?: Clean up redundant/unecessary prop passing, but for now if it ain't broke don't fix it */}
                 <Tab.Screen name="Stock">
                     {(props) => <Home {...props} products={products} setProducts={setProducts} />}
                 </Tab.Screen>
                 <Tab.Screen name="Pick" options={{ headerShown: false }}>
-                    {(props) => <Pick {...props} products={products} setProducts={setProducts} />}
+                    {(props) => <Pick {...props} products={products} setProducts={setProducts}
+                        allOrders={allOrders} setAllOrders={setAllOrders}
+                    />}
                 </Tab.Screen>
                 <Tab.Screen name="Deliveries" options={{ headerShown: false }}>
                     {(props) => <Deliveries {...props} products={products} setProducts={setProducts} />}
                 </Tab.Screen>
                 {isLoggedIn ?
-                    <Tab.Screen name="Invoices">
-                        {(props) => <Invoices {...props} setIsLoggedIn={setIsLoggedIn} />}
+                    <Tab.Screen name="Invoices" options={{ headerShown: false }}>
+                        {(props) => <Invoices {...props} setIsLoggedIn={setIsLoggedIn}
+                            allOrders={allOrders} setAllOrders={setAllOrders}
+                        />}
                     </Tab.Screen> :
-                    <Tab.Screen name="Log in">
+                    <Tab.Screen name="Log in" options={{ headerShown: false }}>
                         {(props) => <Auth {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
                     </Tab.Screen>
                 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { ScrollView, Button, View } from "react-native";
 import { useFocusEffect } from '@react-navigation/native';
 import { DataTable } from 'react-native-paper';
@@ -6,10 +6,7 @@ import { Base } from "../styles/index";
 
 import orderModel from '../models/orders';
 
-// TODO: This should be a subscreen of the list of invoices
-// TODO: This should also add to the list of invoices, not just the order
-export default function ToInvoiceList({ route, navigation }) {
-    const [allOrders, setAllOrders] = useState([]);
+export default function ToInvoiceList({ route, navigation, allOrders, setAllOrders }) {
 
     useFocusEffect(
         useCallback(() => {
@@ -30,7 +27,7 @@ export default function ToInvoiceList({ route, navigation }) {
         .map((order, index) => {
             return <DataTable.Row key={index}>
                 <DataTable.Cell style={Base.container}>
-                    <Button title={order.name} key={index} color={Base.accentColor} onPress={() => {
+                    <Button title={`${order.name} (${order.id})`} key={index} color={Base.accentColor} onPress={() => {
                         navigation.navigate('Invoice order', {
                             order: order
                         });
