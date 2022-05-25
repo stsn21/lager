@@ -21,7 +21,7 @@ function StockList({ products, setProducts }) {
             <View style={[Base.cell, {flexBasis: 5, flexGrow: 1}]}>
                 <Text style={Typography.infoText}>{ product['name'] }</Text>
             </View>
-            <DataTable.Cell style={[Base.cell, {flexBasis: 50, flexGrow: 0}]} numeric>
+            <DataTable.Cell style={[Base.cell, {flexBasis: 70, flexGrow: 0}]} numeric>
                 <Text style={Typography.infoText}>{ product['stock'] }</Text>
             </DataTable.Cell>
         </DataTable.Row>
@@ -29,7 +29,7 @@ function StockList({ products, setProducts }) {
     return <DataTable>
         <DataTable.Header>
             <DataTable.Title style={[Base.cell, {flexBasis: 5, flexGrow: 1}]}><Text style={{textAlign: 'left'}}>Name</Text></DataTable.Title>
-            <DataTable.Title style={[Base.cell, {flexBasis: 50, flexGrow: 0}]} numeric>Qty</DataTable.Title>
+            <DataTable.Title style={[Base.cell, {flexBasis: 70, flexGrow: 0}]} numeric>Qty</DataTable.Title>
         </DataTable.Header>
         {list}
     </DataTable>;
