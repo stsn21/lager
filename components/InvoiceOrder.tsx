@@ -75,7 +75,7 @@ export default function InvoiceOrder({ route, navigation }) {
 
     async function doInvoice() {
         await orderModel.invoiceOrder(order, invoice);
-        navigation.navigate("Orders ready to invoice");
+        navigation.navigate("All invoices");
     }
 
     const orderItemsList = order.order_items.map((item, index) => {
