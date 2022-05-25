@@ -56,7 +56,7 @@ export default function DeliveriesList ({ route, navigation }) {
 
     return <ScrollView style={Base.base}>
         <Button
-            title="Add new delivery"
+            title="Create new delivery..."
             onPress={() => {
                 navigation.navigate("New delivery");
             }}
