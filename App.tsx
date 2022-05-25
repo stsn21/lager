@@ -1,4 +1,3 @@
-// TODO: fix unhandled promise rejection on start
 // TODO: should orders state be lifted up?
 
 import { useState, useEffect } from 'react';

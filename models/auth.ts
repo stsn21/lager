@@ -3,12 +3,11 @@ import config from "../config/config.json";
 import storage from "./storage";
 
 const auth = {
-    loggedIn: async function loggedIn() {
+    loggedIn: async function loggedIn(): Promise<boolean> {
         const token = await storage.readToken();
         const twentyFourHours = 1000 * 60 * 60 * 24;
-        const notExpired = (new Date().getTime() - token.date) < twentyFourHours;
 
-        return token && notExpired;
+        return token && (new Date().getTime() - token.date) < twentyFourHours;
     },
     login: async function login(email: string, password: string) {
         const data = {
