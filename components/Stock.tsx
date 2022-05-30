@@ -2,8 +2,9 @@ import { useCallback } from 'react';
 import { Text, View } from 'react-native';
 import { DataTable } from 'react-native-paper';
 import { useFocusEffect } from '@react-navigation/native';
-import productModel from '../models/products';
 import { Typography, Base } from '../styles/index';
+
+import productModel from '../models/products';
 
 function StockList({ products, setProducts }) {
     useFocusEffect(
@@ -26,9 +27,12 @@ function StockList({ products, setProducts }) {
             </DataTable.Cell>
         </DataTable.Row>
     );
+
     return <DataTable>
         <DataTable.Header>
-            <DataTable.Title style={[Base.cell, {flexBasis: 5, flexGrow: 1}]}><Text style={{textAlign: 'left'}}>Name</Text></DataTable.Title>
+            <DataTable.Title style={[Base.cell, {flexBasis: 5, flexGrow: 1}]}>
+                <Text style={{textAlign: 'left'}}>Name</Text>
+            </DataTable.Title>
             <DataTable.Title style={[Base.cell, {flexBasis: 70, flexGrow: 0}]} numeric>Qty</DataTable.Title>
         </DataTable.Header>
         {list}
