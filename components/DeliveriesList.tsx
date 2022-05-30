@@ -16,7 +16,7 @@ export default function DeliveriesList ({ route, navigation }) {
 
     async function reloadDeliveries() {
         setAllDeliveries(await deliveryModel.getDeliveries());
-    };
+    }
 
     function sortByDateDescending (a: Partial<Delivery>, b: Partial<Delivery>): number {
         if (a.delivery_date !== undefined && b.delivery_date !== undefined) {
