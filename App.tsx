@@ -11,8 +11,9 @@ import Pick from "./components/Pick";
 import Deliveries from './components/Deliveries';
 import Auth from './components/auth/Auth';
 import Invoices from './components/Invoices';
+import Shipping from './components/Shipping';
 
-import authModel from './models/auth'
+import authModel from './models/auth';
 
 const routeIcons = {
     "Stock": "home",
@@ -20,6 +21,7 @@ const routeIcons = {
     "Deliveries": "arrow-down",
     "Log in": "log-in",
     "Invoices": "receipt",
+    "Shipping": "arrow-up",
 };
 
 const Tab = createBottomTabNavigator();
@@ -47,29 +49,53 @@ export default function App() {
                     tabBarInactiveBackgroundColor: Base.navigationContainerBg,
                     ...Base.navigationContainerStyle,
                     tabBarStyle: {padding: 3, backgroundColor: Base.navigationContainerBg}
-                })}
-            >
+            })}>
+
                 <Tab.Screen name="Stock">
-                    {(props) => <Home {...props} products={products} setProducts={setProducts} />}
-                </Tab.Screen>
-                <Tab.Screen name="Pick" options={{ headerShown: false }}>
-                    {(props) => <Pick {...props} products={products} setProducts={setProducts}
-                        allOrders={allOrders} setAllOrders={setAllOrders}
+                    {(props) => <Home {...props}
+                        products={products}
+                        setProducts={setProducts}
                     />}
                 </Tab.Screen>
-                <Tab.Screen name="Deliveries" options={{ headerShown: false }}>
-                    {(props) => <Deliveries {...props} products={products} setProducts={setProducts} />}
+
+                <Tab.Screen name="Pick" options={{ headerShown: false }}>
+                    {(props) => <Pick {...props}
+                        setProducts={setProducts}
+                        allOrders={allOrders}
+                        setAllOrders={setAllOrders}
+                    />}
                 </Tab.Screen>
+
+                <Tab.Screen name="Deliveries" options={{ headerShown: false }}>
+                    {(props) => <Deliveries {...props}
+                        products={products}
+                        setProducts={setProducts}
+                    />}
+                </Tab.Screen>
+
                 {isLoggedIn ?
                     <Tab.Screen name="Invoices" options={{ headerShown: false }}>
-                        {(props) => <Invoices {...props} setIsLoggedIn={setIsLoggedIn}
-                            allOrders={allOrders} setAllOrders={setAllOrders}
+                        {(props) => <Invoices {...props}
+                            setIsLoggedIn={setIsLoggedIn}
+                            allOrders={allOrders}
+                            setAllOrders={setAllOrders}
                         />}
                     </Tab.Screen> :
                     <Tab.Screen name="Log in" options={{ headerShown: false }}>
-                        {(props) => <Auth {...props} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />}
+                        {(props) => <Auth {...props}
+                            isLoggedIn={isLoggedIn}
+                            setIsLoggedIn={setIsLoggedIn}
+                        />}
                     </Tab.Screen>
                 }
+
+                <Tab.Screen name="Shipping" options={{ headerShown: false }}> 
+                    {(props) => <Shipping {...props}
+                        allOrders={allOrders}
+                        setAllOrders={setAllOrders}
+                    />}
+                </Tab.Screen>
+
             </Tab.Navigator>
         </NavigationContainer>
         <StatusBar style="auto" />

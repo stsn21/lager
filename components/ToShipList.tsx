@@ -1,12 +1,12 @@
-import { useEffect, useCallback } from "react";
-import { ScrollView, Button, View } from "react-native";
+import { useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
+import { View, Button } from "react-native";
 import { DataTable } from 'react-native-paper';
-import { Base } from "../styles/index";
+import { Base } from '../styles/index';
 
 import orderModel from '../models/orders';
 
-export default function ToInvoiceList({ route, navigation, allOrders, setAllOrders }) {
+export default function ToShipList({ route, navigation, allOrders, setAllOrders }) {
 
     useFocusEffect(
         useCallback(() => {
@@ -18,21 +18,17 @@ export default function ToInvoiceList({ route, navigation, allOrders, setAllOrde
         setAllOrders(await orderModel.getOrders());
     };
 
-    useEffect(() => {
-        reloadOrders();
-    }, []);
-
-    const listOfOrdersToInvoice = allOrders
-        .filter(order => order.status === "Skickad")
+    const listOfOrders = allOrders
+        .filter(order => order.status === "Packad")
         .map((order, index) => {
             return <DataTable.Row key={index}>
                 <DataTable.Cell style={Base.container}>
                     <Button
                         title={`${order.name} (${order.id})`}
                         key={index}
-                        color={Base.accentColor} 
+                        color={Base.accentColor}
                         onPress={() => {
-                            navigation.navigate('Invoice order', {
+                            navigation.navigate('Ship order', {
                                 order: order
                             });
                         }}
@@ -41,11 +37,9 @@ export default function ToInvoiceList({ route, navigation, allOrders, setAllOrde
             </DataTable.Row>;
         });
 
-    return <ScrollView style={Base.base}>
-        <View style={Base.base}>
-            <DataTable>
-                {listOfOrdersToInvoice}
-            </DataTable>
-        </View>
-    </ScrollView>;
+    return <View style={Base.base}>
+        <DataTable>
+            {listOfOrders}
+        </DataTable>
+    </View>;
 };
