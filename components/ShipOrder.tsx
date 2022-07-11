@@ -7,7 +7,7 @@ import MapView from 'react-native-maps';
 import { Marker } from "react-native-maps";
 import * as Location from 'expo-location';
 
-import orderModel from "../models/orders";
+// import orderModel from "../models/orders";
 import getCoordinates from "../models/nominatim";
 
 export default function ShipOrder({ route, navigation }) {
