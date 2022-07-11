@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, ScrollView, View, Button, StyleSheet } from "react-native";
+import { Text, ScrollView, View, StyleSheet } from "react-native";
 import { Base, Typography, Tables } from "../styles/index";
 import { DataTable } from "react-native-paper";
 
@@ -21,7 +21,7 @@ export default function ShipOrder({ route, navigation }) {
 
     useEffect(() => {
         (async () => {
-            const results = await getCoordinates(`${order.address}, ${order.city}`);
+            const results = await getCoordinates(`${order.address}, ${order.zip} ${order.city}, ${order.country}`);
 
             setMarker(<Marker
                 coordinate={{
@@ -34,8 +34,8 @@ export default function ShipOrder({ route, navigation }) {
             setUpdatedRegion({
                 latitude: parseFloat(results[0].lat),
                 longitude: parseFloat(results[0].lon),
-                latitudeDelta: 0.2,
-                longitudeDelta: 0.2,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.015,
             });
         })();
     }, []);
@@ -121,8 +121,8 @@ export default function ShipOrder({ route, navigation }) {
                 initialRegion={{
                     latitude: 56.1612,
                     longitude: 15.5869,
-                    latitudeDelta: 90.0,
-                    longitudeDelta: 90.0,
+                    latitudeDelta: 40.0,
+                    longitudeDelta: 40.0,
                 }}
                 region={updatedRegion}>
                 {marker}
