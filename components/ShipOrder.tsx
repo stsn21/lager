@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Text, View, Button, StyleSheet } from "react-native";
+import { Text, ScrollView, View, Button, StyleSheet } from "react-native";
 import { Base, Typography, Tables } from "../styles/index";
 import { DataTable } from "react-native-paper";
 
@@ -65,7 +65,7 @@ export default function ShipOrder({ route, navigation }) {
         </DataTable.Row>;
     });
 
-    return <View style={Base.base}>
+    return <ScrollView style={Base.base}>
         <Text style={ Typography.label }>Order { order['id'] }</Text>
         <DataTable>
             <DataTable.Row>
@@ -89,18 +89,20 @@ export default function ShipOrder({ route, navigation }) {
                 </View>
             </DataTable.Row>
         </DataTable>
+        <View style={styles.container}>
+            <MapView
+                style={styles.map}
+                initialRegion={{
+                    latitude: 56.1612,
+                    longitude: 15.5869,
+                    latitudeDelta: 0.1,
+                    longitudeDelta: 0.1,
+                }}>
+                {marker}
+                {locationMarker}
+            </MapView>
+        </View>
 
-        <MapView
-            style={styles.map}
-            initialRegion={{
-                latitude: 56.1612,
-                longitude: 15.5869,
-                latitudeDelta: 0.1,
-                longitudeDelta: 0.1,
-            }}>
-            {marker}
-            {locationMarker}
-        </MapView>
 
         <Text style={ Typography.label }>Items</Text>
         <DataTable>
@@ -111,7 +113,7 @@ export default function ShipOrder({ route, navigation }) {
             {orderItemsList}
         </DataTable>
         {/* <Button title="Ship this order" color={Base.accentColor} onPress={doShip}/> */}
-    </View>;
+    </ScrollView>;
 };
 
 const styles = StyleSheet.create({

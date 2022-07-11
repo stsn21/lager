@@ -1,4 +1,4 @@
-import { Text, Button, Platform, View } from "react-native";
+import { Text, Button, Platform, View, ScrollView } from "react-native";
 import { useState, useEffect } from 'react';
 import { DataTable } from "react-native-paper";
 import { Base, Typography, Tables } from '../styles';
@@ -75,7 +75,7 @@ export default function InvoiceOrder({ route, navigation }) {
         </DataTable.Row>;
     });
 
-    return <View style={Base.base}>
+    return <ScrollView style={Base.base}>
         <Text style={ Typography.label }>Order { order['id'] }</Text>
         <DataTable>
             <DataTable.Row>
@@ -111,5 +111,5 @@ export default function InvoiceOrder({ route, navigation }) {
         <Text style={{ ...Typography.label }}>Due date</Text>
         <DateDropDown invoice={invoice} setInvoice={setInvoice} />
         <Button title="Invoice this order" color={Base.accentColor} onPress={doInvoice}/>
-    </View>;
+    </ScrollView>;
 };

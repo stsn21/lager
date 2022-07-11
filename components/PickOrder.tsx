@@ -1,4 +1,4 @@
-import { View, Text, Button } from "react-native";
+import { ScrollView, View, Text, Button } from "react-native";
 import { useEffect, useState } from 'react';
 import { DataTable } from "react-native-paper";
 import { Base, Typography, Tables } from '../styles';
@@ -45,7 +45,7 @@ export default function PickOrder({ route, navigation, setProducts }) {
         </DataTable.Row>;
     });
 
-    return <View style={Base.base}>
+    return <ScrollView style={Base.base}>
         <Text style={ Typography.label }>Order { order['id'] }</Text>
         <DataTable>
             <DataTable.Row>
@@ -81,5 +81,5 @@ export default function PickOrder({ route, navigation, setProducts }) {
         </DataTable>
 
         <Button title="Pack order" color={Base.accentColor} onPress={pick} disabled={!allInStock} />
-    </View>;
+    </ScrollView>;
 };
