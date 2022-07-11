@@ -15,15 +15,28 @@ export default function ShipOrder({ route, navigation }) {
     const [marker, setMarker] = useState(null);
     const [locationMarker, setLocationMarker] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [updatedRegion, setUpdatedRegion] = useState(null);
+
+    /// !!! Fix useEffect memory leak issue!
 
     useEffect(() => {
         (async () => {
             const results = await getCoordinates(`${order.address}, ${order.city}`);
 
             setMarker(<Marker
-                coordinate={{ latitude: parseFloat(results[0].lat), longitude: parseFloat(results[0].lon) }}
+                coordinate={{
+                    latitude: parseFloat(results[0].lat),
+                    longitude: parseFloat(results[0].lon),
+                }}
                 title={results[0].display_name}
             />);
+
+            setUpdatedRegion({
+                latitude: parseFloat(results[0].lat),
+                longitude: parseFloat(results[0].lon),
+                latitudeDelta: 0.2,
+                longitudeDelta: 0.2,
+            });
         })();
     }, []);
 
@@ -65,55 +78,58 @@ export default function ShipOrder({ route, navigation }) {
         </DataTable.Row>;
     });
 
-    return <ScrollView style={Base.base}>
-        <Text style={ Typography.label }>Order { order['id'] }</Text>
-        <DataTable>
-            <DataTable.Row>
-                <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
-                    <Text style={[Typography.infoText, { textAlign: "left" }]}>Name:</Text>
-                </View>
-                <View style={Base.cell}>
-                    <Text style={[Typography.infoText, { textAlign: "right" }]}>
-                        { order['name'] }
-                    </Text>
-                </View>
-            </DataTable.Row>
-            <DataTable.Row style={{height: 72}}>
-                <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
-                    <Text style={[Typography.infoText, { textAlign: "left" }]}>Address:</Text>
-                </View>
-                <View style={Base.cell}>
-                    <Text style={[Typography.infoText, { textAlign: "right" }]}>
-                        { order['address'] }{"\n"}{ order['zip'] } { order['city'] }{"\n"}{ order['country'] }
-                    </Text>
-                </View>
-            </DataTable.Row>
-        </DataTable>
+    return <View style={Base.base}>
+            <ScrollView style={[Base.base, {flex: 1}]}>
+            <Text style={ Typography.label }>Order { order['id'] }</Text>
+            <DataTable>
+                <DataTable.Row>
+                    <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
+                        <Text style={[Typography.infoText, { textAlign: "left" }]}>Name:</Text>
+                    </View>
+                    <View style={Base.cell}>
+                        <Text style={[Typography.infoText, { textAlign: "right" }]}>
+                            { order['name'] }
+                        </Text>
+                    </View>
+                </DataTable.Row>
+                <DataTable.Row style={{height: 72}}>
+                    <View style={[Base.cell, {flexBasis: 2, flexShrink: 1}]}>
+                        <Text style={[Typography.infoText, { textAlign: "left" }]}>Address:</Text>
+                    </View>
+                    <View style={Base.cell}>
+                        <Text style={[Typography.infoText, { textAlign: "right" }]}>
+                            { order['address'] }{"\n"}{ order['zip'] } { order['city'] }{"\n"}{ order['country'] }
+                        </Text>
+                    </View>
+                </DataTable.Row>
+            </DataTable>
+            
+            <Text style={ Typography.label }>Items</Text>
+            <DataTable>
+                <DataTable.Header>
+                    <DataTable.Title style={Tables.orderItemsColumnFlex.name}>Name</DataTable.Title>
+                    <DataTable.Title style={Tables.orderItemsColumnFlex.qty} numeric>Qty</DataTable.Title>
+                </DataTable.Header>
+                {orderItemsList}
+            </DataTable>
+            {/* <Button title="Ship this order" color={Base.accentColor} onPress={doShip}/> */}
+        </ScrollView>
+
         <View style={styles.container}>
             <MapView
                 style={styles.map}
                 initialRegion={{
                     latitude: 56.1612,
                     longitude: 15.5869,
-                    latitudeDelta: 0.1,
-                    longitudeDelta: 0.1,
-                }}>
+                    latitudeDelta: 90.0,
+                    longitudeDelta: 90.0,
+                }}
+                region={updatedRegion}>
                 {marker}
                 {locationMarker}
             </MapView>
         </View>
-
-
-        <Text style={ Typography.label }>Items</Text>
-        <DataTable>
-            <DataTable.Header>
-                <DataTable.Title style={Tables.orderItemsColumnFlex.name}>Name</DataTable.Title>
-                <DataTable.Title style={Tables.orderItemsColumnFlex.qty} numeric>Qty</DataTable.Title>
-            </DataTable.Header>
-            {orderItemsList}
-        </DataTable>
-        {/* <Button title="Ship this order" color={Base.accentColor} onPress={doShip}/> */}
-    </ScrollView>;
+    </View>;
 };
 
 const styles = StyleSheet.create({
