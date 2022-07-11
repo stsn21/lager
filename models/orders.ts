@@ -50,16 +50,16 @@ const orders = {
 
         await orders.updateOrder(changedOrder);
     },
-    shipOrder: async function shipOrder(order: Partial<Order>) {
-        const changedOrder = {
-            id: order.id,
-            name: order.name,
-            status_id: 400,
-            api_key: config.api_key,
-        };
+    // shipOrder: async function shipOrder(order: Partial<Order>) {
+    //     const changedOrder = {
+    //         id: order.id,
+    //         name: order.name,
+    //         status_id: 400,
+    //         api_key: config.api_key,
+    //     };
 
-        await orders.updateOrder(changedOrder);
-    },
+    //     await orders.updateOrder(changedOrder);
+    // },
     updateOrder: async function updateOrder(order: Partial<Order>): Promise<void> {
         try {
             await fetch(`${config.base_url}/orders?api_key=${config.api_key}`, {
