@@ -49,10 +49,10 @@ export default function ShipOrder({ route, navigation }) {
         })();
     }, []);
 
-    async function doShip() {
-        await orderModel.shipOrder(order);
-        navigation.navigate("Orders ready to ship");
-    }
+    // async function doShip() {
+    //     await orderModel.shipOrder(order);
+    //     navigation.navigate("Orders ready to ship");
+    // }
 
     const orderItemsList = order.order_items.map((item, index) => {
         return <DataTable.Row key={index}>
@@ -110,8 +110,7 @@ export default function ShipOrder({ route, navigation }) {
             </DataTable.Header>
             {orderItemsList}
         </DataTable>
-        <Text style={{ ...Typography.label }}>Due date</Text>
-        <Button title="Ship this order" color={Base.accentColor} onPress={doShip}/>
+        {/* <Button title="Ship this order" color={Base.accentColor} onPress={doShip}/> */}
     </View>;
 };
 
