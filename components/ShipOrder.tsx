@@ -21,7 +21,7 @@ export default function ShipOrder({ route, navigation }) {
 
     useEffect(() => {
         (async () => {
-            const results = await getCoordinates(`${order.address}, ${order.zip} ${order.city}, ${order.country}`);
+            const results = await getCoordinates(`${order.address}, ${order.city} ${order.zip}, ${order.country}`);
 
             setMarker(<Marker
                 coordinate={{
@@ -38,19 +38,17 @@ export default function ShipOrder({ route, navigation }) {
                 longitudeDelta: 0.015,
             });
         })();
-    }, []);
 
-    useEffect(() => {
         (async () => {
             const { status } = await Location.requestForegroundPermissionsAsync();
-    
+
             if (status !== 'granted') {
                 setErrorMessage('Permission to access location was denied');
                 return;
             };
     
             const currentLocation = await Location.getCurrentPositionAsync({});
-    
+
             setLocationMarker(<Marker
                 coordinate={{
                     latitude: currentLocation.coords.latitude,
@@ -103,7 +101,7 @@ export default function ShipOrder({ route, navigation }) {
                     </View>
                 </DataTable.Row>
             </DataTable>
-            
+
             <Text style={ Typography.label }>Items</Text>
             <DataTable>
                 <DataTable.Header>
@@ -134,7 +132,7 @@ export default function ShipOrder({ route, navigation }) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1.5,
         justifyContent: "flex-end",
         alignItems: "center",
     },
