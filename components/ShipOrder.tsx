@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Text, ScrollView, View, StyleSheet } from "react-native";
 import { Base, Typography, Tables } from "../styles/index";
 import { DataTable } from "react-native-paper";
@@ -17,6 +17,8 @@ export default function ShipOrder({ route, navigation }) {
     const [errorMessage, setErrorMessage] = useState(null);
     const [updatedRegion, setUpdatedRegion] = useState(null);
 
+    const map = useRef(null);
+
     /// !!! Fix useEffect memory leak issue!
 
     useEffect(() => {
@@ -29,14 +31,15 @@ export default function ShipOrder({ route, navigation }) {
                     longitude: parseFloat(results[0].lon),
                 }}
                 title={results[0].display_name}
+                identifier={"marker"}
             />);
 
-            setUpdatedRegion({
-                latitude: parseFloat(results[0].lat),
-                longitude: parseFloat(results[0].lon),
-                latitudeDelta: 0.015,
-                longitudeDelta: 0.015,
-            });
+            // setUpdatedRegion({
+            //     latitude: parseFloat(results[0].lat),
+            //     longitude: parseFloat(results[0].lon),
+            //     latitudeDelta: 0.015,
+            //     longitudeDelta: 0.015,
+            // });
         })();
 
         (async () => {
@@ -56,9 +59,20 @@ export default function ShipOrder({ route, navigation }) {
                 }}
                 title="Min plats"
                 pinColor="blue"
+                identifier={"locationMarker"}
             />);
         })();
     }, []);
+
+    useEffect(() => {
+        fitMarkers();
+    }, [marker, locationMarker]);
+
+    function fitMarkers() {
+        if (map?.current && marker && locationMarker) {
+            map.current.fitToSuppliedMarkers(["marker", "locationMarker"], true);
+        };
+    }
 
     // async function doShip() {
     //     await orderModel.shipOrder(order);
@@ -115,6 +129,7 @@ export default function ShipOrder({ route, navigation }) {
 
         <View style={styles.container}>
             <MapView
+                ref={map}
                 style={styles.map}
                 initialRegion={{
                     latitude: 56.1612,
@@ -122,9 +137,12 @@ export default function ShipOrder({ route, navigation }) {
                     latitudeDelta: 40.0,
                     longitudeDelta: 40.0,
                 }}
-                region={updatedRegion}>
-                {marker}
-                {locationMarker}
+                region={updatedRegion}
+                onMapReady={fitMarkers}
+                onMapLoaded={fitMarkers}
+            >
+            {marker}
+            {locationMarker}
             </MapView>
         </View>
     </View>;
