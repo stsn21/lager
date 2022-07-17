@@ -19,8 +19,6 @@ export default function ShipOrder({ route, navigation }) {
 
     const map = useRef(null);
 
-    /// !!! Fix useEffect memory leak issue!
-
     useEffect(() => {
         (async () => {
             const results = await getCoordinates(`${order.address}, ${order.city} ${order.zip}, ${order.country}`);
